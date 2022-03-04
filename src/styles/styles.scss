@@ -1,0 +1,70 @@
+@import './../node_modules/bootstrap/scss/bootstrap.scss';
+
+nav {
+  padding-left: 0 !important;
+  input {
+    background-color: $gray-400 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    &:focus {
+      box-shadow: none !important;
+      border-color: $blue-300 !important;
+    }
+  }
+  button {
+    background-color: $gray-400 !important;
+    border-color: transparent !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    &:hover,
+    &:active {
+      background-color: $gray-500 !important;
+      box-shadow: none !important;
+    }
+    &:active {
+      border-color: $blue-300 !important;
+    }
+    &:focus {
+      text-decoration: none !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.nav-link {
+  color: $white !important;
+  display: flex;
+  justify-content: space-between;
+  &::after {
+    align-self: center;
+  }
+}
+
+.nav-item {
+  .appareil {
+    background-color: $teal !important;
+  }
+
+  .ustensile {
+    background-color: $orange !important;
+  }
+}
+
+.card {
+  margin: 1em 1em 1em 0 !important;
+  .card-body {
+    padding: ($spacer * 2) !important;
+    .card-title {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .container-details-recipe {
+      display: flex;
+      justify-content: space-between;
+      .ingredient-recipe {
+        white-space: nowrap;
+      }
+    }
+  }
+}
