@@ -1,5 +1,6 @@
 @import './../node_modules/bootstrap/scss/bootstrap.scss';
 
+
 nav {
   padding-left: 0 !important;
   input {
@@ -52,8 +53,13 @@ nav {
 
 .card {
   margin: 1em 1em 1em 0 !important;
+  img {
+    background-color: $gray-500;
+    min-height: 10em !important;
+  }
   .card-body {
     padding: ($spacer * 2) !important;
+    background-color: $gray-200;
     .card-title {
       display: flex;
       justify-content: space-between;
@@ -62,6 +68,7 @@ nav {
     .container-details-recipe {
       display: flex;
       justify-content: space-between;
+      font-size: small;
       .ingredient-recipe {
         white-space: nowrap;
       }
