@@ -1,8 +1,14 @@
 @import './../node_modules/bootstrap/scss/bootstrap.scss';
 
-
+header {
+  .my-2 {
+    margin-top: ($spacer * 2) !important;
+    margin-bottom: ($spacer * 2) !important;
+  }
+}
 nav {
-  padding-left: 0 !important;
+  padding-top: 0 !important;
+  margin-bottom: ($spacer * 1) !important;
   input {
     background-color: $gray-400 !important;
     border-top-right-radius: 0 !important;
@@ -42,12 +48,19 @@ nav {
 }
 
 .nav-item {
+  padding-left: ($spacer * 1.5) !important;
+  margin-bottom: ($spacer * .5) !important;
+ 
   .appareil {
     background-color: $teal !important;
   }
 
   .ustensile {
     background-color: $orange !important;
+  }
+  .dropdown-menu.active {
+    width: 100%;
+    height: 100%;
   }
 }
 
