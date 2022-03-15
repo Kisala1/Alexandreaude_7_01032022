@@ -3,13 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="./../styles/styles.css" />
     <title>Les petits plats</title>
   </head>
 
   <body>
     <header>
-      <img class="rounded mx-auto d-block my-2" src="./../images/logo.png" alt="Logo les petits plats">
+      <img
+        class="rounded mx-auto d-block my-2"
+        src="./../images/logo.png"
+        alt="Logo les petits plats"
+      />
     </header>
     <div class="container">
       <div class="row">
@@ -40,222 +50,100 @@
             </button>
           </form>
         </nav>
+        <div id="tagSelector"></div>
         <div class="row nav-item fw-bold dropdown">
-          <a
-            class="col-2 nav-link dropdown-toggle me-3 bg-primary ingredient"
-            href="#"
+          <button
+            class="col-2 btn nav-link dropdown-toggle me-3 bg-primary ingredient"
+            type="button"
             id="navbarDropdown"
-            role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             Ingrédients
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-          <a
-            class="col-2 nav-link dropdown-toggle me-3 appareil"
-            href="#"
+          </button>
+          <ul
+            id="tags-ingredients"
+            class="dropdown-menu list-ingredient"
+            aria-labelledby="navbarDropdown"
+          ></ul>
+          <button
+            class="col-2 btn nav-link dropdown-toggle me-3 appareil"
+            type="button"
             id="navbarDropdown"
-            role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             Appareils
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-          <a
-            class="col-2 nav-link dropdown-toggle ustensile"
-            href="#"
+          </button>
+          <ul
+            id="tags-appliance"
+            class="dropdown-menu list-appliance"
+            aria-labelledby="navbarDropdown"
+          ></ul>
+          <button
+            class="col-2 btn nav-link dropdown-toggle ustensile"
+            type="button"
             id="navbarDropdown"
-            role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
             Ustensiles
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+          </button>
+          <ul
+            id="tags-ustensil"
+            class="dropdown-menu list-ustensil"
+            aria-labelledby="navbarDropdown"
+          ></ul>
         </div>
       </div>
     </div>
 
     <!--------------------Recettes------------------------->
 
-    <div class="container">
-      <div class="row card-recipes">
-        <div class="col-sm-4">
-          <div class="card">
+    <div id="card-recipe"></div>
+    <template id="card-recipe-element">
+      <div id="card" class="col-sm-4">
+        <div class="card">
+          <img src="..." class="card-img-top" alt="..." />
+          <div class="card-body">
             <a href="#" class="stretched-link"></a>
-            <img src="..." class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">
-                Card title
-                <div class="container-time">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-clock"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"
-                    />
-                    <path
-                      d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"
-                    />
-                  </svg>
-                  <strong class="time-recipe"> min</strong>
-                </div>
-              </h5>
-              <div class="container-details-recipe">
-                <ul class="ingredients-recipe list-inline list-unstyled">
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                </ul>
-                <p class="d-inline-block card-text text-truncate description">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
+            <div>
+              <h5 class="card-title">Card title</h5>
+              <div class="container-time">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-clock"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"
+                  />
+                  <path
+                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"
+                  />
+                </svg>
+                <strong class="time-recipe"> min</strong>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="card">
-            <a href="#" class="stretched-link"></a>
-            <img src="..." class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">
-                Card title
-                <div class="container-time">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-clock"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"
-                    />
-                    <path
-                      d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"
-                    />
-                  </svg>
-                  <strong class="time-recipe"> min</strong>
-                </div>
-              </h5>
-              <div class="container-details-recipe">
-                <ul class="ingredients-recipe list-inline list-unstyled">
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                </ul>
-                <p class="d-inline-block card-text text-truncate description">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content. Mettre l'eau à bouillir puis mettre les pâtes dans la casserole.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="card">
-            <img src="..." class="card-img-top" alt="..." />
-            <div class="card-body">
-              <a href="#" class="stretched-link"></a>
-              <h5 class="card-title">
-                Card title
-                <div class="container-time">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-clock"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"
-                    />
-                    <path
-                      d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"
-                    />
-                  </svg>
-                  <strong class="time-recipe"> min</strong>
-                </div>
-              </h5>
-              <div class="container-details-recipe">
-                <ul class="ingredients-recipe list-inline list-unstyled">
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                  <li class="list-inline-item ingredient-recipe">
-                    Ingrédient : 15ml
-                  </li>
-                </ul>
-                <p class="d-inline-block card-text text-truncate description">
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-              </div>
+            <div class="container-details-recipe">
+              <ul class="ingredients-recipe list-inline list-unstyled"></ul>
+              <p class="d-inline-block card-text text-truncate description">
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
+              </p>
             </div>
           </div>
         </div>
       </div>
-
-      <template id="card-recipe-element">
-        <div class="card" style="width: 18rem">
-          <img src="..." class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-          </div>
-        </div>
-      </template>
-    </div>
+    </template>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
     <script type="module" src="./../script/index.js"></script>
   </body>
 </html>

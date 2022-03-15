@@ -23,9 +23,9 @@ fetch('./../../data/recipes.json')
   })
   .then((data) => {
     const recipes = data.recipes
-    getUstensilTags(recipes)
-    getApplianceTags(recipes)
-    getIngredientsTags(recipes)
+    displayTagsDropdown(recipes)
+    displayRecipes(recipes)
+    displayTagsOnClick(recipes)
   })
   .catch((error) => {
     console.error(error)
@@ -40,7 +40,7 @@ function getUstensilTags(recipes) {
       }
     }
   }
-  // console.log(tagsUstensils)
+  return tagsUstensils
 }
 function getApplianceTags(recipes) {
   const tagsAppliance = []
@@ -49,7 +49,7 @@ function getApplianceTags(recipes) {
       tagsAppliance.push(recipe.appliance)
     }
   }
-  // console.log(tagsAppliance)
+  return tagsAppliance
 }
 function getIngredientsTags(recipes) {
   const tagsIngredients = []
@@ -60,5 +60,95 @@ function getIngredientsTags(recipes) {
       }
     }
   }
-  // console.log(tagsIngredients)
+  return tagsIngredients
 }
+
+// Fonction remplir dropdowns
+
+function displayTagsDropdown(recipes) {
+  const listIngredientUl = document.getElementById('tags-ingredients')
+  const ingredientsList = getIngredientsTags(recipes)
+  for (const ingredients of ingredientsList) {
+    const liIngredient = document.createElement('li')
+    liIngredient.classList.add('dropdown-item')
+    liIngredient.textContent = ingredients
+    listIngredientUl.appendChild(liIngredient)
+  }
+
+  const listAppliancetUl = document.getElementById('tags-appliance')
+  const applianceList = getApplianceTags(recipes)
+  for (const appliances of applianceList) {
+    const liAppliance = document.createElement('li')
+    liAppliance.classList.add('dropdown-item')
+    liAppliance.textContent = appliances
+    listAppliancetUl.appendChild(liAppliance)
+  }
+
+  const listUstensilUl = document.getElementById('tags-ustensil')
+  const ustansilList = getUstensilTags(recipes)
+  for (const ustensils of ustansilList) {
+    const liUstensil = document.createElement('li')
+    liUstensil.classList.add('dropdown-item')
+    liUstensil.textContent = ustensils
+    listUstensilUl.appendChild(liUstensil)
+  }
+}
+
+// fonction affichage recette
+
+function displayRecipes(recipes) {
+  for (const recipe of recipes) {
+    const recipesList = document.getElementById('card-recipe')
+    const recipesElementTemplate = document.getElementById(
+      'card-recipe-element'
+    )
+    const el = document.importNode(recipesElementTemplate.content, true)
+    el.getElementById('card').dataset.id = recipe.id
+    el.querySelector('h5').textContent = recipe.name
+    el.querySelector('strong').textContent = recipe.time + ' min'
+    const containerIngredients = el.querySelector('ul')
+
+    for (const elm of recipe.ingredients) {
+      const ingredientElm = document.createElement('li')
+      ingredientElm.classList.add('ingredient-recipe')
+
+      ingredientElm.textContent =
+        elm.ingredient + ': ' + elm.quantity + ' ' + elm.unit
+      if (elm.unit === undefined) {
+        ingredientElm.textContent = elm.ingredient + ': ' + elm.quantity
+      }
+      containerIngredients.appendChild(ingredientElm)
+    }
+
+    el.querySelector('p').textContent = recipe.description
+
+    recipesList.appendChild(el)
+  }
+}
+
+function displayTagsOnClick(recipes) {
+  const tagSelector = document.getElementById('tagSelector')
+  const tagsElts = document.getElementsByClassName('dropdown-item')
+  for (const elt of tagsElts) {
+    elt.addEventListener('click', (e) => {
+      const tagEl = document.createElement('span')
+      tagEl.classList.add('tag')
+      tagEl.textContent = e.target.textContent
+      tagSelector.appendChild(tagEl)
+      // registerFilterWithTags(recipes, tagEl.textContent)
+    })
+  }
+}
+
+// function registerFilterWithTags(recipes, tag) {
+//   const recipesFilter = recipes.filter((elt) => elt.ingredient.includes(tag))
+//   const recipeIds = recipesFilter.map((elt) => elt.id)
+//   document.getElementsById('card-recipe').forEach((recipes) => {
+//     if (recipeIds.includes(parseInt(recipes.dataset.id))) {
+//       recipes.style.display = 'block'
+//     } else {
+//       recipes.style.display = 'none'
+//     }
+//   })
+//   console.log(tag)
+// }

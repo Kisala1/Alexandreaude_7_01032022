@@ -37,33 +37,61 @@ nav {
     }
   }
 }
-
-.nav-link {
-  color: $white !important;
-  display: flex;
-  justify-content: space-between;
-  &::after {
-    align-self: center;
+#tagSelector {
+  margin-bottom: 0.75em;
+  .tag {
+    cursor: pointer;
+    background-color: $blue-400;
+    color: $white;
+    padding: 0.3em;
+    margin: 0.5em 0.5em 0.5em 0;
+    border-radius: 00.3em;
   }
 }
-
 .nav-item {
   padding-left: ($spacer * 1.5) !important;
-  margin-bottom: ($spacer * .5) !important;
- 
+  margin-bottom: ($spacer * 0.5) !important;
+  .nav-link {
+    color: $white !important;
+    display: flex;
+    justify-content: space-between;
+    &::after {
+      align-self: center;
+    }
+  }
+  .dropdown-item {
+    color: $white;
+  }
+  #tags-ingredients {
+    background-color: $blue;
+    .dropdown-item:hover {
+      background-color: $blue-600 !important;
+    }
+  }
   .appareil {
     background-color: $teal !important;
+  }
+  .list-appliance {
+    background-color: $teal !important;
+    .dropdown-item:hover {
+      background-color: $teal-600 !important;
+    }
   }
 
   .ustensile {
     background-color: $orange !important;
   }
-  .dropdown-menu.active {
-    width: 100%;
-    height: 100%;
+  .list-ustensil {
+    background-color: $orange !important;
+    .dropdown-item:hover {
+      background-color: $orange-600 !important;
+    }
   }
 }
-
+#card-recipe {
+  display: flex;
+  flex-wrap: wrap;
+}
 .card {
   margin: 1em 1em 1em 0 !important;
   img {
@@ -84,6 +112,9 @@ nav {
       font-size: small;
       .ingredient-recipe {
         white-space: nowrap;
+        .ingredientOfRecipe {
+          font-weight: bold;
+        }
       }
     }
   }
