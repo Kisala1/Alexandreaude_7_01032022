@@ -64,34 +64,41 @@ function getIngredientsTags(recipes) {
 }
 
 // Fonction remplir dropdowns
+function getRandomNb() {
+  return String(Math.floor(Math.random(1) * 10000))
+}
 
 function displayTagsDropdown(recipes) {
   const listIngredientUl = document.getElementById('tags-ingredients')
   const ingredientsList = getIngredientsTags(recipes)
   for (const ingredients of ingredientsList) {
     const liIngredient = document.createElement('li')
+    liIngredient.setAttribute('id', 'igdts-' + getRandomNb())
     liIngredient.classList.add('dropdown-item')
     liIngredient.textContent = ingredients
     listIngredientUl.appendChild(liIngredient)
   }
 
-  const listAppliancetUl = document.getElementById('tags-appliance')
+  const listAppliancetUl = document.getElementById('tags-appliances')
   const applianceList = getApplianceTags(recipes)
   for (const appliances of applianceList) {
     const liAppliance = document.createElement('li')
     liAppliance.classList.add('dropdown-item')
+    liAppliance.setAttribute('id', 'app-' + getRandomNb())
     liAppliance.textContent = appliances
     listAppliancetUl.appendChild(liAppliance)
   }
 
-  const listUstensilUl = document.getElementById('tags-ustensil')
+  const listUstensilUl = document.getElementById('tags-ustensils')
   const ustansilList = getUstensilTags(recipes)
   for (const ustensils of ustansilList) {
     const liUstensil = document.createElement('li')
     liUstensil.classList.add('dropdown-item')
+    liUstensil.setAttribute('id', 'usl-' + getRandomNb())
     liUstensil.textContent = ustensils
     listUstensilUl.appendChild(liUstensil)
   }
+  listUstensilUl.firstChild.setAttribute('id', 'tag1')
 }
 
 // fonction affichage recette
@@ -117,6 +124,9 @@ function displayRecipes(recipes) {
       if (elm.unit === undefined) {
         ingredientElm.textContent = elm.ingredient + ': ' + elm.quantity
       }
+      if (elm.quantity === undefined) {
+        ingredientElm.textContent = elm.ingredient
+      }
       containerIngredients.appendChild(ingredientElm)
     }
 
@@ -126,6 +136,8 @@ function displayRecipes(recipes) {
   }
 }
 
+// Fonction pour afficher le tag au-dessus des dropdowns
+
 function displayTagsOnClick(recipes) {
   const tagSelector = document.getElementById('tagSelector')
   const tagsElts = document.getElementsByClassName('dropdown-item')
@@ -134,21 +146,72 @@ function displayTagsOnClick(recipes) {
       const tagEl = document.createElement('span')
       tagEl.classList.add('tag')
       tagEl.textContent = e.target.textContent
+      const closeSymbol = document.createElement('i')
+      closeSymbol.classList.add('bi', 'bi-x-circle')
+      tagEl.appendChild(closeSymbol)
       tagSelector.appendChild(tagEl)
-      // registerFilterWithTags(recipes, tagEl.textContent)
+
+      
+      closeTag(tagEl, closeSymbol)
+    
+      const target = e.target
+      registerFilterWithTags(recipes, target)
     })
   }
 }
 
-// function registerFilterWithTags(recipes, tag) {
-//   const recipesFilter = recipes.filter((elt) => elt.ingredient.includes(tag))
-//   const recipeIds = recipesFilter.map((elt) => elt.id)
-//   document.getElementsById('card-recipe').forEach((recipes) => {
-//     if (recipeIds.includes(parseInt(recipes.dataset.id))) {
-//       recipes.style.display = 'block'
-//     } else {
-//       recipes.style.display = 'none'
-//     }
-//   })
-//   console.log(tag)
-// }
+// Enlever tag
+
+function closeTag(tagEl, closeSymbol) {
+  closeSymbol.addEventListener('click', () => {
+    console.log('clic')
+    tagEl.classList.add('tagClose')
+  })
+}
+
+// Fonction pour filtrer les recettes par tag
+
+function registerFilterWithTags(recipes, target) {
+  const containerRecipes = document.getElementById('card-recipe')
+  const tagsIngredients = document.getElementById('tags-ingredients')
+  const tagsAppliances = document.getElementById('tags-appliances')
+  const tagsUstensils = document.getElementById('tags-ustensils')
+  const dropdownClosestOfTag = target.closest('ul').getAttribute('id')
+  const dropdownClosestOfTagSplit = String(dropdownClosestOfTag.split())
+
+  if (dropdownClosestOfTagSplit === 'tags-ingredients') {
+    const recipeFilter = recipes.filter((el) =>
+      el.ingredients.find((el) => el.ingredient === target.textContent)
+    )
+
+    refresh(containerRecipes, recipeFilter, tagsIngredients)
+  }
+
+  if (dropdownClosestOfTagSplit === 'tags-appliances') {
+    const recipeFilter = recipes.filter((el) =>
+      el.appliance.includes(target.textContent)
+    )
+
+    refresh(containerRecipes, recipeFilter, tagsAppliances)
+  }
+
+  if (dropdownClosestOfTagSplit === 'tags-ustensils') {
+    const recipeFilter = recipes.filter((el) =>
+      el.ustensils.includes(target.textContent)
+    )
+
+    refresh(containerRecipes, recipeFilter, tagsUstensils)
+  }
+}
+
+// Fonction pour raffréchir recettes + tags des dropdowns
+
+function refresh(containerRecipes, recipeFilter, listTags) {
+  containerRecipes.innerHTML = ''
+  displayRecipes(recipeFilter)
+  listTags.innerHTML = ''
+  displayTagsDropdown(recipeFilter)
+}
+// ajouter addeventlistener pour supprimer les tags
+// Inclure champs de recherche dans dropdowns
+// Faire la recherche

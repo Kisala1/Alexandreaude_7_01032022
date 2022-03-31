@@ -5,6 +5,7 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -11605,9 +11606,18 @@ nav button:focus {
   cursor: pointer;
   background-color: #3d8bfd;
   color: #fff;
-  padding: 0.3em;
+  padding: 0.5em 1em 0.5em 1em;
   margin: 0.5em 0.5em 0.5em 0;
   border-radius: 0.3em;
+}
+#tagSelector .tag .bi {
+  margin-left: 0.5em;
+}
+#tagSelector .tag .bi:hover {
+  color: #000;
+}
+#tagSelector .tagClose {
+  display: none !important;
 }
 
 .nav-item {
@@ -11662,6 +11672,10 @@ nav button:focus {
   background-color: #adb5bd;
   min-height: 10em !important;
 }
+.card .container-title {
+  display: flex;
+  justify-content: space-between;
+}
 .card .card-body {
   padding: 2rem !important;
   background-color: #e9ecef;
@@ -11680,6 +11694,9 @@ nav button:focus {
 }
 .card .card-body .container-details-recipe .ingredient-recipe .ingredientOfRecipe {
   font-weight: bold;
+}
+.card .card-body .container-details-recipe .description {
+  white-space: normal;
 }
 
 /*# sourceMappingURL=styles.css.map */
