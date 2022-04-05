@@ -14,6 +14,8 @@
 // EventListener pour supprimer le tag
 // faire une boucle qui check les tags restants et afficher les recettes
 
+import { displayTagsOnClick } from './tag.js'
+
 fetch('./../../data/recipes.json')
   .then((response) => {
     if (!response.ok) {
@@ -63,12 +65,13 @@ function getIngredientsTags(recipes) {
   return tagsIngredients
 }
 
-// Fonction remplir dropdowns
 function getRandomNb() {
   return String(Math.floor(Math.random(1) * 10000))
 }
 
-function displayTagsDropdown(recipes) {
+// Fonction remplir dropdowns
+
+export function displayTagsDropdown(recipes) {
   const listIngredientUl = document.getElementById('tags-ingredients')
   const ingredientsList = getIngredientsTags(recipes)
   for (const ingredients of ingredientsList) {
@@ -103,7 +106,7 @@ function displayTagsDropdown(recipes) {
 
 // fonction affichage recette
 
-function displayRecipes(recipes) {
+export function displayRecipes(recipes) {
   for (const recipe of recipes) {
     const recipesList = document.getElementById('card-recipe')
     const recipesElementTemplate = document.getElementById(
@@ -136,82 +139,5 @@ function displayRecipes(recipes) {
   }
 }
 
-// Fonction pour afficher le tag au-dessus des dropdowns
-
-function displayTagsOnClick(recipes) {
-  const tagSelector = document.getElementById('tagSelector')
-  const tagsElts = document.getElementsByClassName('dropdown-item')
-  for (const elt of tagsElts) {
-    elt.addEventListener('click', (e) => {
-      const tagEl = document.createElement('span')
-      tagEl.classList.add('tag')
-      tagEl.textContent = e.target.textContent
-      const closeSymbol = document.createElement('i')
-      closeSymbol.classList.add('bi', 'bi-x-circle')
-      tagEl.appendChild(closeSymbol)
-      tagSelector.appendChild(tagEl)
-
-      
-      closeTag(tagEl, closeSymbol)
-    
-      const target = e.target
-      registerFilterWithTags(recipes, target)
-    })
-  }
-}
-
-// Enlever tag
-
-function closeTag(tagEl, closeSymbol) {
-  closeSymbol.addEventListener('click', () => {
-    console.log('clic')
-    tagEl.classList.add('tagClose')
-  })
-}
-
-// Fonction pour filtrer les recettes par tag
-
-function registerFilterWithTags(recipes, target) {
-  const containerRecipes = document.getElementById('card-recipe')
-  const tagsIngredients = document.getElementById('tags-ingredients')
-  const tagsAppliances = document.getElementById('tags-appliances')
-  const tagsUstensils = document.getElementById('tags-ustensils')
-  const dropdownClosestOfTag = target.closest('ul').getAttribute('id')
-  const dropdownClosestOfTagSplit = String(dropdownClosestOfTag.split())
-
-  if (dropdownClosestOfTagSplit === 'tags-ingredients') {
-    const recipeFilter = recipes.filter((el) =>
-      el.ingredients.find((el) => el.ingredient === target.textContent)
-    )
-
-    refresh(containerRecipes, recipeFilter, tagsIngredients)
-  }
-
-  if (dropdownClosestOfTagSplit === 'tags-appliances') {
-    const recipeFilter = recipes.filter((el) =>
-      el.appliance.includes(target.textContent)
-    )
-
-    refresh(containerRecipes, recipeFilter, tagsAppliances)
-  }
-
-  if (dropdownClosestOfTagSplit === 'tags-ustensils') {
-    const recipeFilter = recipes.filter((el) =>
-      el.ustensils.includes(target.textContent)
-    )
-
-    refresh(containerRecipes, recipeFilter, tagsUstensils)
-  }
-}
-
-// Fonction pour raffréchir recettes + tags des dropdowns
-
-function refresh(containerRecipes, recipeFilter, listTags) {
-  containerRecipes.innerHTML = ''
-  displayRecipes(recipeFilter)
-  listTags.innerHTML = ''
-  displayTagsDropdown(recipeFilter)
-}
-// ajouter addeventlistener pour supprimer les tags
 // Inclure champs de recherche dans dropdowns
 // Faire la recherche
