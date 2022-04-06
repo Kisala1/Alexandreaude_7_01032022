@@ -1,15 +1,23 @@
+@use 'sass:math';
 @import './../node_modules/bootstrap/scss/bootstrap.scss';
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css');
 
+/*******************HEADER********************/
 header {
   .my-2 {
     margin-top: ($spacer * 2) !important;
     margin-bottom: ($spacer * 2) !important;
   }
 }
+/*********************************************/
+
+/***************NAVIGATION********************/
 nav {
   padding-top: 0 !important;
   margin-bottom: ($spacer * 1) !important;
+  .search {
+    width: 100%;
+  }
   input {
     background-color: $gray-400 !important;
     border-top-right-radius: 0 !important;
@@ -38,17 +46,19 @@ nav {
     }
   }
 }
-#tagSelector {
+/************************************************/
+/*****************DROPDOWNS**********************/
+
+.tagSelector {
   margin-bottom: 0.75em;
   .tag {
     cursor: pointer;
     background-color: $blue-400;
-
     color: $white;
     padding: 0.5em 1em 0.5em 1em;
     margin: 0.5em 0.5em 0.5em 0;
     border-radius: 0.3em;
-    .bi {
+    .close-tag {
       margin-left: 0.5em;
       &:hover {
         color: $black;
@@ -60,8 +70,16 @@ nav {
   }
 }
 .nav-item {
-  padding-left: ($spacer * 1.5) !important;
   margin-bottom: ($spacer * 0.5) !important;
+  // .search-ingt {
+  //   border: none;
+  //   width: 8em;
+  //   background-color: $blue;
+  //   color: $white;
+  // }
+  // ::placeholder {
+  //   color: $white;
+  // }
   .nav-link {
     color: $white !important;
     display: flex;
@@ -70,41 +88,53 @@ nav {
       align-self: center;
     }
   }
-  .dropdown-item {
-    color: $white;
-  }
-  #tags-ingredients {
-    background-color: $blue;
-    .dropdown-item:hover {
-      background-color: $blue-600 !important;
-    }
-  }
-  .appareil {
-    background-color: $teal !important;
-  }
-  .list-appliance {
-    background-color: $teal !important;
-    .dropdown-item:hover {
-      background-color: $teal-600 !important;
-    }
-  }
+}
 
-  .ustensile {
-    background-color: $orange !important;
-  }
-  .list-ustensil {
-    background-color: $orange !important;
-    .dropdown-item:hover {
-      background-color: $orange-600 !important;
-    }
+.dropdown-item {
+  color: $white;
+}
+
+.list-ingredient {
+  background-color: $blue;
+  .dropdown-item:hover {
+    color: $white;
+    background-color: $blue-600 !important;
   }
 }
-#card-recipe {
-  display: flex;
-  flex-wrap: wrap;
+
+.btn-appareil {
+  background-color: $teal !important;
 }
+
+.list-appliance {
+  background-color: $teal !important;
+  .dropdown-item:hover {
+    color: $white;
+    background-color: $teal-600 !important;
+  }
+}
+
+.btn-ustensile {
+  background-color: $orange !important;
+}
+
+.list-ustensil {
+  background-color: $orange !important;
+  .dropdown-item:hover {
+    color: $white;
+    background-color: $orange-600 !important;
+  }
+}
+.list-ingredient.show,
+list-appliance.show,
+.list-ustensil.list-ingredient.show {
+  display: grid;
+  grid-template-columns: repeat(3, math.div(100%, 3));
+}
+/******************************************************/
+/**********************CARDS***************************/
+
 .card {
-  margin: 1em 1em 1em 0 !important;
   img {
     background-color: $gray-500;
     min-height: 10em !important;
@@ -112,19 +142,22 @@ nav {
   .container-title {
     display: flex;
     justify-content: space-between;
-  }
-  .card-body {
-    padding: ($spacer * 2) !important;
-    background-color: $gray-200;
     .card-title {
       display: flex;
       justify-content: space-between;
     }
+  }
+  .card-body {
+    padding: ($spacer * 2) !important;
+    background-color: $gray-200;
 
     .container-details-recipe {
       display: flex;
       justify-content: space-between;
       font-size: small;
+      .ingredients-recipe {
+        margin-right: 20px;
+      }
       .ingredient-recipe {
         white-space: nowrap;
         .ingredientOfRecipe {

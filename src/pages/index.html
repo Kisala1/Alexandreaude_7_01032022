@@ -22,9 +22,9 @@
       />
     </header>
     <div class="container">
-      <div class="row">
-        <nav class="col navbar navbar-expand-lg">
-          <form class="col d-flex">
+      <div>
+        <nav class="navbar navbar-expand-lg">
+          <form class="d-flex search">
             <input
               class="form-control me-0 border-2"
               type="search"
@@ -50,59 +50,65 @@
             </button>
           </form>
         </nav>
-        <div id="tagSelector"></div>
+        <div id="tagSelector" class="tagSelector"></div>
         <div class="row nav-item fw-bold dropdown">
-          <button
-            class="col-2 btn nav-link dropdown-toggle me-3 bg-primary ingredient"
-            type="button"
-            id="navbarDropdown"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Ingrédients
-          </button>
-          <ul
-            id="tags-ingredients"
-            class="dropdown-menu list-ingredient"
-            aria-labelledby="navbarDropdown"
-          ></ul>
-          <button
-            class="col-2 btn nav-link dropdown-toggle me-3 appareil"
-            type="button"
-            id="navbarDropdown"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Appareils
-          </button>
-          <ul
-            id="tags-appliances"
-            class="dropdown-menu list-appliance"
-            aria-labelledby="navbarDropdown"
-          ></ul>
-          <button
-            class="col-2 btn nav-link dropdown-toggle ustensile"
-            type="button"
-            id="navbarDropdown"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Ustensiles
-          </button>
-          <ul
-            id="tags-ustensils"
-            class="dropdown-menu list-ustensil"
-            aria-labelledby="navbarDropdown"
-          ></ul>
+          <div class="col-2 d-grid">
+            <button
+              class="btn nav-link dropdown-toggle me-3 bg-primary btn-ingredient"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <!-- <input type="search"
+              class="search-ingt"
+              placeholder="Ingrédients"/> -->
+              Ingrédients
+            </button>
+            <ul
+              id="tags-ingredients"
+              class="dropdown-menu list-ingredient"
+              aria-labelledby="navbarDropdown"
+            ></ul>
+          </div>
+          <div class="col-2 d-grid">
+            <button
+              class="btn nav-link dropdown-toggle me-3 btn-appareil"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Appareils
+            </button>
+            <ul
+              id="tags-appliances"
+              class="dropdown-menu list-appliance"
+              aria-labelledby="navbarDropdown"
+            ></ul>
+          </div>
+          <div class="col-2 d-grid">
+            <button
+              class="btn nav-link dropdown-toggle btn-ustensile"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Ustensiles
+            </button>
+            <ul
+              id="tags-ustensils"
+              class="dropdown-menu list-ustensil"
+              aria-labelledby="navbarDropdown"
+            ></ul>
+          </div>
         </div>
       </div>
     </div>
 
     <!--------------------Recettes------------------------->
 
-    <div id="card-recipe"></div>
+    <div id="card-recipe" class="row g-6 mx-6 my-2"></div>
     <template id="card-recipe-element">
-      <div id="card" class="col-sm-4">
+      <div class="col-sm-4">
         <div class="card">
           <img src="..." class="card-img-top" alt="..." />
           <div class="card-body">

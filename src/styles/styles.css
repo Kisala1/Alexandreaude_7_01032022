@@ -11563,14 +11563,20 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+/*******************HEADER********************/
 header .my-2 {
   margin-top: 2rem !important;
   margin-bottom: 2rem !important;
 }
 
+/*********************************************/
+/***************NAVIGATION********************/
 nav {
   padding-top: 0 !important;
   margin-bottom: 1rem !important;
+}
+nav .search {
+  width: 100%;
 }
 nav input {
   background-color: #ced4da !important;
@@ -11599,10 +11605,12 @@ nav button:focus {
   box-shadow: none !important;
 }
 
-#tagSelector {
+/************************************************/
+/*****************DROPDOWNS**********************/
+.tagSelector {
   margin-bottom: 0.75em;
 }
-#tagSelector .tag {
+.tagSelector .tag {
   cursor: pointer;
   background-color: #3d8bfd;
   color: #fff;
@@ -11610,18 +11618,17 @@ nav button:focus {
   margin: 0.5em 0.5em 0.5em 0;
   border-radius: 0.3em;
 }
-#tagSelector .tag .bi {
+.tagSelector .tag .close-tag {
   margin-left: 0.5em;
 }
-#tagSelector .tag .bi:hover {
+.tagSelector .tag .close-tag:hover {
   color: #000;
 }
-#tagSelector .tagClose {
+.tagSelector .tagClose {
   display: none !important;
 }
 
 .nav-item {
-  padding-left: 1.5rem !important;
   margin-bottom: 0.5rem !important;
 }
 .nav-item .nav-link {
@@ -11632,42 +11639,52 @@ nav button:focus {
 .nav-item .nav-link::after {
   align-self: center;
 }
-.nav-item .dropdown-item {
+
+.dropdown-item {
   color: #fff;
 }
-.nav-item #tags-ingredients {
+
+.list-ingredient {
   background-color: #0d6efd;
 }
-.nav-item #tags-ingredients .dropdown-item:hover {
+.list-ingredient .dropdown-item:hover {
+  color: #fff;
   background-color: #0a58ca !important;
 }
-.nav-item .appareil {
+
+.btn-appareil {
   background-color: #20c997 !important;
 }
-.nav-item .list-appliance {
+
+.list-appliance {
   background-color: #20c997 !important;
 }
-.nav-item .list-appliance .dropdown-item:hover {
+.list-appliance .dropdown-item:hover {
+  color: #fff;
   background-color: #1aa179 !important;
 }
-.nav-item .ustensile {
+
+.btn-ustensile {
   background-color: #fd7e14 !important;
 }
-.nav-item .list-ustensil {
+
+.list-ustensil {
   background-color: #fd7e14 !important;
 }
-.nav-item .list-ustensil .dropdown-item:hover {
+.list-ustensil .dropdown-item:hover {
+  color: #fff;
   background-color: #ca6510 !important;
 }
 
-#card-recipe {
-  display: flex;
-  flex-wrap: wrap;
+.list-ingredient.show,
+list-appliance.show,
+.list-ustensil.list-ingredient.show {
+  display: grid;
+  grid-template-columns: repeat(3, 33.3333333333%);
 }
 
-.card {
-  margin: 1em 1em 1em 0 !important;
-}
+/******************************************************/
+/**********************CARDS***************************/
 .card img {
   background-color: #adb5bd;
   min-height: 10em !important;
@@ -11676,18 +11693,21 @@ nav button:focus {
   display: flex;
   justify-content: space-between;
 }
+.card .container-title .card-title {
+  display: flex;
+  justify-content: space-between;
+}
 .card .card-body {
   padding: 2rem !important;
   background-color: #e9ecef;
-}
-.card .card-body .card-title {
-  display: flex;
-  justify-content: space-between;
 }
 .card .card-body .container-details-recipe {
   display: flex;
   justify-content: space-between;
   font-size: small;
+}
+.card .card-body .container-details-recipe .ingredients-recipe {
+  margin-right: 20px;
 }
 .card .card-body .container-details-recipe .ingredient-recipe {
   white-space: nowrap;

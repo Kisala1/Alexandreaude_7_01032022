@@ -11,14 +11,14 @@ export function displayTagsOnClick(recipes) {
       tagEl.classList.add('tag')
       tagEl.textContent = e.target.textContent
       const closeSymbol = document.createElement('i')
-      closeSymbol.classList.add('bi', 'bi-x-circle')
+      closeSymbol.classList.add('bi', 'bi-x-circle', 'close-tag')
       tagEl.appendChild(closeSymbol)
       tagSelector.appendChild(tagEl)
 
-      closeTag(tagEl, closeSymbol)
-
       const target = e.target
       registerFilterWithTags(recipes, target)
+
+      closeTag(tagEl, closeSymbol)
     })
   }
 }

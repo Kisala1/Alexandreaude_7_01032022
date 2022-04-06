@@ -1,12 +1,3 @@
-// Récupérer recettes
-// Extraire les différents tags : ingredient (tableau d'objets),
-//ustensils (chaîne de caractères), appliance (tableaux)
-
-// Remplir les dropdown
-
-// Gérer l'affichage des recettes
-
-// Eventlistener sur tags, afficher le tag au-dessus du dropdown, filtrer les recettes
 // Faire une variable des recettes filtrées
 // Reprendre les tags des recettes filtrer et reremplir les dropdown
 // Gérer l'affichage des recettes
@@ -15,7 +6,6 @@
 // faire une boucle qui check les tags restants et afficher les recettes
 
 import { displayTagsOnClick } from './tag.js'
-
 fetch('./../../data/recipes.json')
   .then((response) => {
     if (!response.ok) {
@@ -65,10 +55,6 @@ function getIngredientsTags(recipes) {
   return tagsIngredients
 }
 
-function getRandomNb() {
-  return String(Math.floor(Math.random(1) * 10000))
-}
-
 // Fonction remplir dropdowns
 
 export function displayTagsDropdown(recipes) {
@@ -76,7 +62,6 @@ export function displayTagsDropdown(recipes) {
   const ingredientsList = getIngredientsTags(recipes)
   for (const ingredients of ingredientsList) {
     const liIngredient = document.createElement('li')
-    liIngredient.setAttribute('id', 'igdts-' + getRandomNb())
     liIngredient.classList.add('dropdown-item')
     liIngredient.textContent = ingredients
     listIngredientUl.appendChild(liIngredient)
@@ -87,7 +72,6 @@ export function displayTagsDropdown(recipes) {
   for (const appliances of applianceList) {
     const liAppliance = document.createElement('li')
     liAppliance.classList.add('dropdown-item')
-    liAppliance.setAttribute('id', 'app-' + getRandomNb())
     liAppliance.textContent = appliances
     listAppliancetUl.appendChild(liAppliance)
   }
@@ -97,11 +81,9 @@ export function displayTagsDropdown(recipes) {
   for (const ustensils of ustansilList) {
     const liUstensil = document.createElement('li')
     liUstensil.classList.add('dropdown-item')
-    liUstensil.setAttribute('id', 'usl-' + getRandomNb())
     liUstensil.textContent = ustensils
     listUstensilUl.appendChild(liUstensil)
   }
-  listUstensilUl.firstChild.setAttribute('id', 'tag1')
 }
 
 // fonction affichage recette
@@ -113,7 +95,9 @@ export function displayRecipes(recipes) {
       'card-recipe-element'
     )
     const el = document.importNode(recipesElementTemplate.content, true)
-    el.getElementById('card').dataset.id = recipe.id
+
+    // el.getElementsByClassName('card').dataset.id = recipe.id
+
     el.querySelector('h5').textContent = recipe.name
     el.querySelector('strong').textContent = recipe.time + ' min'
     const containerIngredients = el.querySelector('ul')
@@ -123,13 +107,32 @@ export function displayRecipes(recipes) {
       ingredientElm.classList.add('ingredient-recipe')
 
       ingredientElm.textContent =
-        elm.ingredient + ': ' + elm.quantity + ' ' + elm.unit
-      if (elm.unit === undefined) {
-        ingredientElm.textContent = elm.ingredient + ': ' + elm.quantity
+        elm.ingredient + ' : ' + elm.quantity + ' ' + elm.unit
+
+      if (elm.unit === 'gramme' || elm.unit === 'grammes') {
+        ingredientElm.textContent =
+          elm.ingredient + ' : ' + elm.quantity + ' ' + 'gr'
       }
-      if (elm.quantity === undefined) {
+      if (elm.unit === 'cuillères à soupe' || elm.unit === 'cuillère à soupe') {
+        ingredientElm.textContent =
+          elm.ingredient + ' : ' + elm.quantity + ' ' + 'CaS'
+      }
+      if (elm.unit === undefined) {
+        ingredientElm.textContent = elm.ingredient + ' : ' + elm.quantity
+      }
+      if (elm.quantity === undefined && elm.unit === undefined) {
         ingredientElm.textContent = elm.ingredient
       }
+
+      if (elm.ingredient === 'Viande hachée 1% de matière grasse') {
+        ingredientElm.textContent =
+          'Viande hachée' + ' : ' + elm.quantity + ' ' + 'gr'
+      }
+      if (elm.ingredient === 'Saucisse bretonne ou de toulouse') {
+        ingredientElm.textContent =
+          'Saucisse' + ' : ' + elm.quantity 
+      }
+
       containerIngredients.appendChild(ingredientElm)
     }
 
