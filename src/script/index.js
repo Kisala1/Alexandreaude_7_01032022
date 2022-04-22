@@ -1,146 +1,146 @@
-// Faire une variable des recettes filtrées
-// Reprendre les tags des recettes filtrer et reremplir les dropdown
-// Gérer l'affichage des recettes
+// import { displayTagsOnClick } from './tag.js'
+import { RecipesModel } from './recipes/recipes.model.js'
+import { RecipesController } from './recipes/recipes.controller.js'
+import { RecipesView } from './recipes/recipes.view.js'
 
-// EventListener pour supprimer le tag
-// faire une boucle qui check les tags restants et afficher les recettes
+// fetch('../data/recipes.json')
+//   .then((response) => {
+//     if (!response.ok) {
+//       throw new Error('HTTP error ' + response.status)
+//     }
+//     return response.json()
+//   })
+//   .then((data) => {
+//     const recipes = data.recipes
+//     // displayTagsDropdown(recipes)
+//     displayRecipes(recipes)
+//     // displayTagsOnClick(recipes)
+//   })
+//   .catch((error) => {
+//     console.error(error)
+//   })
 
-import { displayTagsOnClick } from './tag.js'
-fetch('./../../data/recipes.json')
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('HTTP error ' + response.status)
-    }
-    return response.json()
-  })
-  .then((data) => {
-    const recipes = data.recipes
-    displayTagsDropdown(recipes)
-    displayRecipes(recipes)
-    displayTagsOnClick(recipes)
-  })
-  .catch((error) => {
-    console.error(error)
-  })
-
-function getUstensilTags(recipes) {
-  const tagsUstensils = []
-  for (const recipe of recipes) {
-    for (const ustensil of recipe.ustensils) {
-      if (!tagsUstensils.includes(ustensil)) {
-        tagsUstensils.push(ustensil)
-      }
-    }
-  }
-  return tagsUstensils
+function main() {
+  const model = new RecipesModel()
+  const view = new RecipesView()
+  const controller = new RecipesController(model, view)
+  controller.load()
 }
-function getApplianceTags(recipes) {
-  const tagsAppliance = []
-  for (const recipe of recipes) {
-    if (!tagsAppliance.includes(recipe.appliance)) {
-      tagsAppliance.push(recipe.appliance)
-    }
-  }
-  return tagsAppliance
-}
-function getIngredientsTags(recipes) {
-  const tagsIngredients = []
-  for (const recipe of recipes) {
-    for (const ingredient of recipe.ingredients) {
-      if (!tagsIngredients.includes(ingredient.ingredient)) {
-        tagsIngredients.push(ingredient.ingredient)
-      }
-    }
-  }
-  return tagsIngredients
-}
+main()
 
-// Fonction remplir dropdowns
+// function getUstensilTags(recipes) {
+//   const tagsUstensils = []
+//   for (const recipe of recipes) {
+//     for (const ustensil of recipe.ustensils) {
+//       if (!tagsUstensils.includes(ustensil)) {
+//         tagsUstensils.push(ustensil)
+//       }
+//     }
+//   }
+//   return tagsUstensils
+// }
+// function getApplianceTags(recipes) {
+//   const tagsAppliance = []
+//   for (const recipe of recipes) {
+//     if (!tagsAppliance.includes(recipe.appliance)) {
+//       tagsAppliance.push(recipe.appliance)
+//     }
+//   }
+//   return tagsAppliance
+// }
+// function getIngredientsTags(recipes) {
+//   const tagsIngredients = []
+//   for (const recipe of recipes) {
+//     for (const ingredient of recipe.ingredients) {
+//       if (!tagsIngredients.includes(ingredient.ingredient)) {
+//         tagsIngredients.push(ingredient.ingredient)
+//       }
+//     }
+//   }
+//   return tagsIngredients
+// }
 
-export function displayTagsDropdown(recipes) {
-  const listIngredientUl = document.getElementById('tags-ingredients')
-  const ingredientsList = getIngredientsTags(recipes)
-  for (const ingredients of ingredientsList) {
-    const liIngredient = document.createElement('li')
-    liIngredient.classList.add('dropdown-item')
-    liIngredient.textContent = ingredients
-    listIngredientUl.appendChild(liIngredient)
-  }
+// // Fonction remplir dropdowns
 
-  const listAppliancetUl = document.getElementById('tags-appliances')
-  const applianceList = getApplianceTags(recipes)
-  for (const appliances of applianceList) {
-    const liAppliance = document.createElement('li')
-    liAppliance.classList.add('dropdown-item')
-    liAppliance.textContent = appliances
-    listAppliancetUl.appendChild(liAppliance)
-  }
+// export function displayTagsDropdown(recipes) {
+//   const listIngredientUl = document.getElementById('tags-ingredients')
+//   const ingredientsList = getIngredientsTags(recipes)
+//   for (const ingredients of ingredientsList) {
+//     const liIngredient = document.createElement('li')
+//     liIngredient.classList.add('dropdown-item')
+//     liIngredient.textContent = ingredients
+//     listIngredientUl.appendChild(liIngredient)
+//   }
 
-  const listUstensilUl = document.getElementById('tags-ustensils')
-  const ustansilList = getUstensilTags(recipes)
-  for (const ustensils of ustansilList) {
-    const liUstensil = document.createElement('li')
-    liUstensil.classList.add('dropdown-item')
-    liUstensil.textContent = ustensils
-    listUstensilUl.appendChild(liUstensil)
-  }
-}
+//   const listAppliancetUl = document.getElementById('tags-appliances')
+//   const applianceList = getApplianceTags(recipes)
+//   for (const appliances of applianceList) {
+//     const liAppliance = document.createElement('li')
+//     liAppliance.classList.add('dropdown-item')
+//     liAppliance.textContent = appliances
+//     listAppliancetUl.appendChild(liAppliance)
+//   }
 
-// fonction affichage recette
+//   const listUstensilUl = document.getElementById('tags-ustensils')
+//   const ustansilList = getUstensilTags(recipes)
+//   for (const ustensils of ustansilList) {
+//     const liUstensil = document.createElement('li')
+//     liUstensil.classList.add('dropdown-item')
+//     liUstensil.textContent = ustensils
+//     listUstensilUl.appendChild(liUstensil)
+//   }
+// }
 
-export function displayRecipes(recipes) {
-  for (const recipe of recipes) {
-    const recipesList = document.getElementById('card-recipe')
-    const recipesElementTemplate = document.getElementById(
-      'card-recipe-element'
-    )
-    const el = document.importNode(recipesElementTemplate.content, true)
+// // fonction affichage recette
 
-    // el.getElementsByClassName('card').dataset.id = recipe.id
+// function displayRecipes(recipes) {
+//   return recipes.map((recipe) =>  {
+//     const recipesList = document.getElementById('card-recipe')
+//     const recipesElementTemplate = document.getElementById(
+//       'card-recipe-element'
+//     )
+//     const el = document.importNode(recipesElementTemplate.content, true)
 
-    el.querySelector('h5').textContent = recipe.name
-    el.querySelector('strong').textContent = recipe.time + ' min'
-    const containerIngredients = el.querySelector('ul')
+//     el.querySelector('div.card').dataset.id = recipe.id
 
-    for (const elm of recipe.ingredients) {
-      const ingredientElm = document.createElement('li')
-      ingredientElm.classList.add('ingredient-recipe')
+//     el.querySelector('h5').textContent = recipe.name
+//     el.querySelector('strong').textContent = recipe.time + ' min'
+//     const containerIngredients = el.querySelector('ul')
 
-      ingredientElm.textContent =
-        elm.ingredient + ' : ' + elm.quantity + ' ' + elm.unit
+//     for (const elm of recipe.ingredients) {
+//       const ingredientElm = document.createElement('li')
+//       ingredientElm.classList.add('ingredient-recipe')
 
-      if (elm.unit === 'gramme' || elm.unit === 'grammes') {
-        ingredientElm.textContent =
-          elm.ingredient + ' : ' + elm.quantity + ' ' + 'gr'
-      }
-      if (elm.unit === 'cuillères à soupe' || elm.unit === 'cuillère à soupe') {
-        ingredientElm.textContent =
-          elm.ingredient + ' : ' + elm.quantity + ' ' + 'CaS'
-      }
-      if (elm.unit === undefined) {
-        ingredientElm.textContent = elm.ingredient + ' : ' + elm.quantity
-      }
-      if (elm.quantity === undefined && elm.unit === undefined) {
-        ingredientElm.textContent = elm.ingredient
-      }
+//       ingredientElm.textContent =
+//         elm.ingredient + ' : ' + elm.quantity + ' ' + elm.unit
 
-      if (elm.ingredient === 'Viande hachée 1% de matière grasse') {
-        ingredientElm.textContent =
-          'Viande hachée' + ' : ' + elm.quantity + ' ' + 'gr'
-      }
-      if (elm.ingredient === 'Saucisse bretonne ou de toulouse') {
-        ingredientElm.textContent =
-          'Saucisse' + ' : ' + elm.quantity 
-      }
+//       if (elm.unit === 'gramme' || elm.unit === 'grammes') {
+//         ingredientElm.textContent =
+//           elm.ingredient + ' : ' + elm.quantity + ' ' + 'gr'
+//         if (elm.ingredient === 'Viande hachée 1% de matière grasse') {
+//           ingredientElm.textContent =
+//             'Viande hachée' + ' : ' + elm.quantity + ' ' + 'gr'
+//         }
+//       }
+//       if (elm.unit === 'cuillères à soupe' || elm.unit === 'cuillère à soupe') {
+//         ingredientElm.textContent =
+//           elm.ingredient + ' : ' + elm.quantity + ' ' + 'CaS'
+//       }
+//       if (elm.unit === undefined) {
+//         ingredientElm.textContent = elm.ingredient + ' : ' + elm.quantity
+//         if (elm.ingredient === 'Saucisse bretonne ou de toulouse') {
+//           ingredientElm.textContent = 'Saucisses' + ' : ' + elm.quantity
+//         }
+//         if (elm.quantity === undefined) {
+//           ingredientElm.textContent = elm.ingredient
+//         }
+//       }
 
-      containerIngredients.appendChild(ingredientElm)
-    }
+//       containerIngredients.appendChild(ingredientElm)
+//     }
 
-    el.querySelector('p').textContent = recipe.description
+//     el.querySelector('p').textContent = recipe.description
 
-    recipesList.appendChild(el)
-  }
-}
-
-// Inclure champs de recherche dans dropdowns
-// Faire la recherche
+//     recipesList.appendChild(el)
+//   })
+// }
