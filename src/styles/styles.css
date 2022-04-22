@@ -11612,7 +11612,6 @@ nav button:focus {
 }
 .tagSelector .tag {
   cursor: pointer;
-  background-color: #3d8bfd;
   color: #fff;
   padding: 0.5em 1em 0.5em 1em;
   margin: 0.5em 0.5em 0.5em 0;
@@ -11624,8 +11623,23 @@ nav button:focus {
 .tagSelector .tag .close-tag:hover {
   color: #000;
 }
-.tagSelector .tagClose {
-  display: none !important;
+.tagSelector .ingredient {
+  background-color: #3d8bfd;
+}
+.tagSelector .ingredient:hover {
+  background-color: #0d6efd;
+}
+.tagSelector .appliance {
+  background-color: #20c997;
+}
+.tagSelector .appliance:hover {
+  background-color: #1aa179;
+}
+.tagSelector .ustensil {
+  background-color: #fd7e14;
+}
+.tagSelector .ustensil:hover {
+  background-color: #ca6510;
 }
 
 .nav-item {

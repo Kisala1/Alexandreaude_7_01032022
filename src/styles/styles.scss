@@ -53,11 +53,11 @@ nav {
   margin-bottom: 0.75em;
   .tag {
     cursor: pointer;
-    background-color: $blue-400;
     color: $white;
     padding: 0.5em 1em 0.5em 1em;
     margin: 0.5em 0.5em 0.5em 0;
     border-radius: 0.3em;
+
     .close-tag {
       margin-left: 0.5em;
       &:hover {
@@ -65,8 +65,23 @@ nav {
       }
     }
   }
-  .tagClose {
-    display: none !important;
+  .ingredient {
+    background-color: $blue-400;
+    &:hover {
+      background-color: $blue-500;
+    }
+  }
+  .appliance {
+    background-color: $teal;
+    &:hover {
+      background-color: $teal-600;
+    }
+  }
+  .ustensil {
+    background-color: $orange;
+    &:hover {
+      background-color: $orange-600;
+    }
   }
 }
 .nav-item {

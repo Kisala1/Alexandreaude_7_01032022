@@ -27,7 +27,6 @@ export class RecipesModel extends EventEmitter {
       return
     }
 
-
     if (subFilters.indexOf(name) === -1) {
       subFilters.push(name)
       this.filter()
@@ -46,9 +45,9 @@ export class RecipesModel extends EventEmitter {
       return
     }
 
-
-    if (subFilters.includes(name) === true) {
-      subFilters.splice(name)
+    const removedIndex = subFilters.indexOf(name)
+    if (removedIndex !== -1) {
+      subFilters.splice(removedIndex, 1)
       this.filter()
     }
   }

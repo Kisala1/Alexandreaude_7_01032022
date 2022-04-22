@@ -1,4 +1,5 @@
 import { EventEmitter } from '../util/event-emitter.js'
+import { capitalize, compareIgnoreCase } from '../util/utils.js'
 
 export class RecipesView extends EventEmitter {
   constructor() {
@@ -29,15 +30,14 @@ export class RecipesView extends EventEmitter {
 
       // Collect ustensils
       for (const ustensil of recipe.ustensils) {
-        // faire ailleurs l'ajout de la maj
-        allUstensils.add(ustensil.charAt(0).toUpperCase() + ustensil.slice(1)) 
+        allUstensils.add(ustensil)
       }
     }
 
     // Ranger par ordre alphabétique
-    allIngredients = [...allIngredients].sort()
-    allAppliances = [...allAppliances].sort()
-    allUstensils = [...allUstensils].sort()
+    allIngredients = [...allIngredients].sort(compareIgnoreCase)
+    allAppliances = [...allAppliances].sort(compareIgnoreCase)
+    allUstensils = [...allUstensils].sort(compareIgnoreCase)
 
     // Render recipes cards
     this.recipesElem.innerHTML = ''
@@ -74,7 +74,6 @@ export class RecipesView extends EventEmitter {
     for (const ustensil of filters.ustensils) {
       this.tags.appendChild(this.createTag('ustensil', ustensil))
     }
-
   }
 
   // Créer card Recette
@@ -84,37 +83,37 @@ export class RecipesView extends EventEmitter {
     )
     const elem = document.importNode(recipesElementTemplate.content, true)
 
-    elem.querySelector('.card-title').textContent = recipe.name
     elem.querySelector('div.card').dataset.id = recipe.id
+    elem.querySelector('.card-title').textContent = recipe.name
     elem.querySelector('.time-recipe').textContent = recipe.time + ' min'
 
     const containerIngredients = elem.querySelector('ul.ingredients-recipe')
-    for (const elm of recipe.ingredients) {
+    for (const {ingredient, quantity ,unit} of recipe.ingredients) {
       const ingredientElm = document.createElement('li')
       ingredientElm.classList.add('ingredient-recipe')
       ingredientElm.textContent =
-        elm.ingredient + ' : ' + elm.quantity + ' ' + elm.unit
+        ingredient + ' : ' + quantity + ' ' + unit
 
-      if (elm.unit === 'gramme' || elm.unit === 'grammes') {
+      if (unit === 'gramme' || unit === 'grammes') {
         ingredientElm.textContent =
-          elm.ingredient + ' : ' + elm.quantity + ' ' + 'gr'
-        if (elm.ingredient === 'Viande hachée 1% de matière grasse') {
+          ingredient + ' : ' + quantity + ' ' + 'gr'
+        if (ingredient === 'Viande hachée 1% de matière grasse') {
           ingredientElm.textContent =
-            'Viande hachée' + ' : ' + elm.quantity + ' ' + 'gr'
+            'Viande hachée' + ' : ' + quantity + ' ' + 'gr'
         }
       }
-      if (elm.unit === 'cuillères à soupe' || elm.unit === 'cuillère à soupe') {
+      if (unit === 'cuillères à soupe' || unit === 'cuillère à soupe') {
         ingredientElm.textContent =
-          elm.ingredient + ' : ' + elm.quantity + ' ' + 'CaS'
+          ingredient + ' : ' + quantity + ' ' + 'CaS'
       }
 
-      if (elm.unit === undefined) {
-        ingredientElm.textContent = elm.ingredient + ' : ' + elm.quantity
-        if (elm.ingredient === 'Saucisse bretonne ou de toulouse') {
-          ingredientElm.textContent = 'Saucisses' + ' : ' + elm.quantity
+      if (unit === undefined) {
+        ingredientElm.textContent = ingredient + ' : ' + quantity
+        if (ingredient === 'Saucisse bretonne ou de toulouse') {
+          ingredientElm.textContent = 'Saucisses' + ' : ' + quantity
         }
-        if (elm.quantity === undefined) {
-          ingredientElm.textContent = elm.ingredient
+        if (quantity === undefined) {
+          ingredientElm.textContent = ingredient
         }
       }
       containerIngredients.appendChild(ingredientElm)
@@ -150,7 +149,7 @@ export class RecipesView extends EventEmitter {
   createUstensilLi(ustensilName) {
     const liElem = document.createElement('li')
     liElem.classList.add('dropdown-item')
-    liElem.textContent = ustensilName
+    liElem.textContent = capitalize(ustensilName)
     liElem.addEventListener('click', () => {
       this.emit('addFilter', { type: 'ustensil', name: ustensilName })
     })
@@ -159,18 +158,19 @@ export class RecipesView extends EventEmitter {
 
   // Créer tag
   createTag(type, tag) {
-    const tagEl = document.createElement('span')
-    tagEl.classList.add('tag')
-    tagEl.classList.add(type)
-    tagEl.textContent = tag
+    const tagElem = document.createElement('span')
+    tagElem.classList.add('tag')
+    tagElem.classList.add(type)
+    tagElem.textContent = capitalize(tag)
+
     const closeSymbol = document.createElement('i')
     closeSymbol.classList.add('bi', 'bi-x-circle', 'close-tag')
 
     closeSymbol.addEventListener('click', () => {
-      this.emit('removeFilter', {type: type, name: tag})
+      this.emit('removeFilter', { type: type, name: tag })
     })
 
-    tagEl.appendChild(closeSymbol)
-    return tagEl
+    tagElem.appendChild(closeSymbol)
+    return tagElem
   }
 }
