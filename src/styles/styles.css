@@ -11709,11 +11709,8 @@ list-appliance.show,
 .card .card-body .container-details-recipe .ingredients-recipe {
   margin-right: 20px;
 }
-.card .card-body .container-details-recipe .ingredient-recipe {
+.card .card-body .container-details-recipe .ingredients-recipe .ingredient-recipe {
   white-space: nowrap;
-}
-.card .card-body .container-details-recipe .ingredient-recipe .ingredientOfRecipe {
-  font-weight: bold;
 }
 .card .card-body .container-details-recipe .description {
   white-space: normal;

@@ -5,37 +5,62 @@ export class RecipesView extends EventEmitter {
     super()
     this.recipesElem = document.getElementById('card-recipe')
     this.ingredientsUl = document.getElementById('tags-ingredients')
-    /*
     this.appliancesUl = document.getElementById('tags-appliances')
     this.ustensilsUl = document.getElementById('tags-ustensils')
+    /*
     this.tags = document.getElementById('tagSelector')
     */
-    // this.controller.model.addObserver(this)
   }
 
   render({ recipes, filters }) {
     let allIngredients = new Set()
+    let allAppliances = new Set()
+    let allUstensils = new Set()
+
     for (const recipe of recipes) {
+      // Collect ingredients
       for (const ingredient of recipe.ingredients) {
-        allIngredients.add(ingredient.ingredient)
+        if (!allIngredients.has(ingredient)) {
+          allIngredients.add(ingredient.ingredient)
+        }
       }
-      // TODO: Collect appliances
-      // TODO: Collect ustensils
+
+      // Collect appliances
+      allAppliances.add(recipe.appliance)
+
+      // Collect ustensils
+      for (const ustensil of recipe.ustensils) {
+        allUstensils.add(ustensil.charAt(0).toUpperCase() + ustensil.slice(1))
+      }
     }
+
     allIngredients = [...allIngredients].sort()
+    allAppliances = [...allAppliances].sort()
+    allUstensils = [...allUstensils].sort()
 
     // Render recipes cards
     this.recipesElem.innerHTML = ''
     for (const recipe of recipes) {
       this.recipesElem.appendChild(this.createRecipe(recipe))
     }
-    
+
     // Render ingredients dropdown
     this.ingredientsUl.innerHTML = ''
     for (const ingredientName of allIngredients) {
       this.ingredientsUl.appendChild(this.createIngredientLi(ingredientName))
     }
 
+    // Render appliances dropdown
+    this.appliancesUl.innerHTML = ''
+    for (const applianceName of allAppliances) {
+      this.appliancesUl.appendChild(this.createApplianceLi(applianceName))
+    }
+
+    // Render ustensils dropdown
+    this.ustensilsUl.innerHTML = ''
+    for (const ustensilName of allUstensils) {
+      this.ustensilsUl.appendChild(this.createUstensilLi(ustensilName))
+    }
     // Render tags
     // console.log(filters)
   }
@@ -46,48 +71,15 @@ export class RecipesView extends EventEmitter {
     )
     const elem = document.importNode(recipesElementTemplate.content, true)
 
-    // TODO: Edit template
     // Title
     elem.querySelector('.card-title').textContent = recipe.name
+    elem.querySelector('div.card').dataset.id = recipe.id
+    elem.querySelector('.time-recipe').textContent = recipe.time + ' min'
 
-    
-
-    return elem
-  }
-
-  createIngredientLi(ingredientName) {
-    const liElem = document.createElement('li')
-    liElem.classList.add('dropdown-item')
-    liElem.textContent = ingredientName
-    liElem.addEventListener('click', () => {
-      this.emit('addFilter', { type: 'ingredient', name: ingredientName })
-    })
-    return liElem
-  }
-
-  /*
-  update(model) {
-    console.log("XX hey pourquoi tu t'affiches pas")
-    this.recipes = this.displayRecipes(model.recipes)
-    // this.ingredientsUl.textContent = this.displayTagsDropdown(model.ingredients)
-    // this.appliancesUl.textContent = this.displayTagsDropdown(model.appliances)
-    // this.ustensilsUl.textContent = this.displayTagsDropdown(model.ustensils)
-  }
-
-  displayRecipes(recipes) {
-    return recipes.map((recipe) => {
-      console.log(recipe)
-      const recipesElementTemplate = document.getElementById(
-        'card-recipe-element'
-      )
-      const el = document.importNode(recipesElementTemplate.content, true)
-      el.querySelector('div.card').dataset.id = recipe.id
-
-      el.querySelector('h5').textContent = recipe.name
-      el.querySelector('strong').textContent = recipe.time + ' min'
-      const containerIngredients = el.querySelector('ul')
-
+    const containerIngredients = elem.querySelector('ul.ingredients-recipe')
+    for (const elm of recipe.ingredients) {
       const ingredientElm = document.createElement('li')
+      ingredientElm.classList.add('ingredient-recipe')
       ingredientElm.textContent =
         elm.ingredient + ' : ' + elm.quantity + ' ' + elm.unit
 
@@ -113,73 +105,41 @@ export class RecipesView extends EventEmitter {
           ingredientElm.textContent = elm.ingredient
         }
       }
-
       containerIngredients.appendChild(ingredientElm)
+    }
 
-      el.querySelector('p').textContent = recipe.description
+    elem.querySelector('p.description').textContent = recipe.description
 
-      recipes.appendChild(el)
-    })
+    return elem
   }
-  */
 
-  // getUstensilTags() {
-  //   const tagsUstensils = []
-  //   for (const recipe of this.recipes) {
-  //     for (const ustensil of recipe.ustensils) {
-  //       if (!tagsUstensils.includes(ustensil)) {
-  //         tagsUstensils.push(ustensil)
-  //       }
-  //     }
-  //   }
-  //   return tagsUstensils
-  // }
+  createIngredientLi(ingredientName) {
+    const liElem = document.createElement('li')
+    liElem.classList.add('dropdown-item')
+    liElem.textContent = ingredientName
+    liElem.addEventListener('click', () => {
+      this.emit('addFilter', { type: 'ingredient', name: ingredientName })
+    })
+    return liElem
+  }
 
-  // getApplianceTags() {
-  //   const tagsAppliance = []
-  //   for (const recipe of this.recipes) {
-  //     if (!tagsAppliance.includes(recipe.appliance)) {
-  //       tagsAppliance.push(recipe.appliance)
-  //     }
-  //   }
-  //   return tagsAppliance
-  // }
+  createApplianceLi(applianceName) {
+    const liElem = document.createElement('li')
+    liElem.classList.add('dropdown-item')
+    liElem.textContent = applianceName
+    liElem.addEventListener('click', () => {
+      this.emit('addFilter', { type: 'appliance', name: applianceName })
+    })
+    return liElem
+  }
 
-  // getIngredientsTags() {
-  //   const tagsIngredients = []
-  //   for (const recipe of this.recipes) {
-  //     for (const ingredient of recipe.ingredients) {
-  //       if (!tagsIngredients.includes(ingredient.ingredient)) {
-  //         tagsIngredients.push(ingredient.ingredient)
-  //       }
-  //     }
-  //   }
-  //   return tagsIngredients
-  // }
-
-  // displayTagsDropdown() {
-  //   const ingredientsList = getIngredientsTags()
-  //   for (const ingredients of ingredientsList) {
-  //     const liIngredient = document.createElement('li')
-  //     liIngredient.classList.add('dropdown-item')
-  //     liIngredient.textContent = ingredients
-  //     this.ingredientsUl.appendChild(liIngredient)
-  //   }
-
-  //   const applianceList = getApplianceTags()
-  //   for (const appliances of applianceList) {
-  //     const liAppliance = document.createElement('li')
-  //     liAppliance.classList.add('dropdown-item')
-  //     liAppliance.textContent = appliances
-  //     this.appliancesUl.appendChild(liAppliance)
-  //   }
-
-  //   const ustansilList = getUstensilTags()
-  //   for (const ustensils of ustansilList) {
-  //     const liUstensil = document.createElement('li')
-  //     liUstensil.classList.add('dropdown-item')
-  //     liUstensil.textContent = ustensils
-  //     this.ustensilsUl.appendChild(liUstensil)
-  //   }
-  // }
+  createUstensilLi(ustensilName) {
+    const liElem = document.createElement('li')
+    liElem.classList.add('dropdown-item')
+    liElem.textContent = ustensilName
+    liElem.addEventListener('click', () => {
+      this.emit('addFilter', { type: 'ustensil', name: ustensilName })
+    })
+    return liElem
+  }
 }

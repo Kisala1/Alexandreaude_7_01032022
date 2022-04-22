@@ -71,15 +71,6 @@ nav {
 }
 .nav-item {
   margin-bottom: ($spacer * 0.5) !important;
-  // .search-ingt {
-  //   border: none;
-  //   width: 8em;
-  //   background-color: $blue;
-  //   color: $white;
-  // }
-  // ::placeholder {
-  //   color: $white;
-  // }
   .nav-link {
     color: $white !important;
     display: flex;
@@ -157,11 +148,8 @@ list-appliance.show,
       font-size: small;
       .ingredients-recipe {
         margin-right: 20px;
-      }
-      .ingredient-recipe {
-        white-space: nowrap;
-        .ingredientOfRecipe {
-          font-weight: bold;
+        .ingredient-recipe {
+          white-space: nowrap;
         }
       }
       .description {
