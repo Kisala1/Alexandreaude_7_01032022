@@ -27,6 +27,7 @@ export class RecipesModel extends EventEmitter {
       return
     }
 
+
     if (subFilters.indexOf(name) === -1) {
       subFilters.push(name)
       this.filter()
@@ -45,7 +46,11 @@ export class RecipesModel extends EventEmitter {
       return
     }
 
-    // TODO: Remove filter
+
+    if (subFilters.includes(name) === true) {
+      subFilters.splice(name)
+      this.filter()
+    }
   }
 
   filter() {

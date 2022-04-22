@@ -7,9 +7,8 @@ export class RecipesView extends EventEmitter {
     this.ingredientsUl = document.getElementById('tags-ingredients')
     this.appliancesUl = document.getElementById('tags-appliances')
     this.ustensilsUl = document.getElementById('tags-ustensils')
-    /*
+
     this.tags = document.getElementById('tagSelector')
-    */
   }
 
   render({ recipes, filters }) {
@@ -30,10 +29,12 @@ export class RecipesView extends EventEmitter {
 
       // Collect ustensils
       for (const ustensil of recipe.ustensils) {
-        allUstensils.add(ustensil.charAt(0).toUpperCase() + ustensil.slice(1))
+        // faire ailleurs l'ajout de la maj
+        allUstensils.add(ustensil.charAt(0).toUpperCase() + ustensil.slice(1)) 
       }
     }
 
+    // Ranger par ordre alphabétique
     allIngredients = [...allIngredients].sort()
     allAppliances = [...allAppliances].sort()
     allUstensils = [...allUstensils].sort()
@@ -61,17 +62,28 @@ export class RecipesView extends EventEmitter {
     for (const ustensilName of allUstensils) {
       this.ustensilsUl.appendChild(this.createUstensilLi(ustensilName))
     }
+
     // Render tags
-    // console.log(filters)
+    this.tags.innerHTML = ''
+    for (const ingredient of filters.ingredients) {
+      this.tags.appendChild(this.createTag('ingredient', ingredient))
+    }
+    for (const appliance of filters.appliances) {
+      this.tags.appendChild(this.createTag('appliance', appliance))
+    }
+    for (const ustensil of filters.ustensils) {
+      this.tags.appendChild(this.createTag('ustensil', ustensil))
+    }
+
   }
 
+  // Créer card Recette
   createRecipe(recipe) {
     const recipesElementTemplate = document.getElementById(
       'card-recipe-element'
     )
     const elem = document.importNode(recipesElementTemplate.content, true)
 
-    // Title
     elem.querySelector('.card-title').textContent = recipe.name
     elem.querySelector('div.card').dataset.id = recipe.id
     elem.querySelector('.time-recipe').textContent = recipe.time + ' min'
@@ -113,6 +125,8 @@ export class RecipesView extends EventEmitter {
     return elem
   }
 
+  // Fonctions pour créer les li : Ingredient, Appliance, Ustensil
+
   createIngredientLi(ingredientName) {
     const liElem = document.createElement('li')
     liElem.classList.add('dropdown-item')
@@ -141,5 +155,22 @@ export class RecipesView extends EventEmitter {
       this.emit('addFilter', { type: 'ustensil', name: ustensilName })
     })
     return liElem
+  }
+
+  // Créer tag
+  createTag(type, tag) {
+    const tagEl = document.createElement('span')
+    tagEl.classList.add('tag')
+    tagEl.classList.add(type)
+    tagEl.textContent = tag
+    const closeSymbol = document.createElement('i')
+    closeSymbol.classList.add('bi', 'bi-x-circle', 'close-tag')
+
+    closeSymbol.addEventListener('click', () => {
+      this.emit('removeFilter', {type: type, name: tag})
+    })
+
+    tagEl.appendChild(closeSymbol)
+    return tagEl
   }
 }
