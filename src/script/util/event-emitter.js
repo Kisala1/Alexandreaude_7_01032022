@@ -9,7 +9,6 @@ export class EventEmitter {
       listeners = []
       this.listenersByName.set(name, listeners)
     }
-
     listeners.push(listener)
   }
 

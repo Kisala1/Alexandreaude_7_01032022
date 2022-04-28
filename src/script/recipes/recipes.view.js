@@ -88,23 +88,20 @@ export class RecipesView extends EventEmitter {
     elem.querySelector('.time-recipe').textContent = recipe.time + ' min'
 
     const containerIngredients = elem.querySelector('ul.ingredients-recipe')
-    for (const {ingredient, quantity ,unit} of recipe.ingredients) {
+    for (const { ingredient, quantity, unit } of recipe.ingredients) {
       const ingredientElm = document.createElement('li')
       ingredientElm.classList.add('ingredient-recipe')
-      ingredientElm.textContent =
-        ingredient + ' : ' + quantity + ' ' + unit
+      ingredientElm.textContent = ingredient + ' : ' + quantity + ' ' + unit
 
       if (unit === 'gramme' || unit === 'grammes') {
-        ingredientElm.textContent =
-          ingredient + ' : ' + quantity + ' ' + 'gr'
+        ingredientElm.textContent = ingredient + ' : ' + quantity + ' ' + 'gr'
         if (ingredient === 'Viande hachée 1% de matière grasse') {
           ingredientElm.textContent =
             'Viande hachée' + ' : ' + quantity + ' ' + 'gr'
         }
       }
       if (unit === 'cuillères à soupe' || unit === 'cuillère à soupe') {
-        ingredientElm.textContent =
-          ingredient + ' : ' + quantity + ' ' + 'CaS'
+        ingredientElm.textContent = ingredient + ' : ' + quantity + ' ' + 'CaS'
       }
 
       if (unit === undefined) {

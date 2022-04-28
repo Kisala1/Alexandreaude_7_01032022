@@ -11571,6 +11571,10 @@ header .my-2 {
 
 /*********************************************/
 /***************NAVIGATION********************/
+.container-nav {
+  margin: 0 4.5em 0 4.5em;
+}
+
 nav {
   padding-top: 0 !important;
   margin-bottom: 1rem !important;
@@ -11578,12 +11582,12 @@ nav {
 nav .search {
   width: 100%;
 }
-nav input {
+nav .main-search {
   background-color: #ced4da !important;
   border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
 }
-nav input:focus {
+nav .main-search:focus {
   box-shadow: none !important;
   border-color: #6ea8fe !important;
 }
@@ -11606,7 +11610,7 @@ nav button:focus {
 }
 
 /************************************************/
-/*****************DROPDOWNS**********************/
+/****Tags****/
 .tagSelector {
   margin-bottom: 0.75em;
 }
@@ -11642,20 +11646,58 @@ nav button:focus {
   background-color: #ca6510;
 }
 
+/************/
+/*****************DROPDOWNS**********************/
 .nav-item {
+  display: flex;
   margin-bottom: 0.5rem !important;
 }
-.nav-item .nav-link {
-  color: #fff !important;
-  display: flex;
-  justify-content: space-between;
-}
-.nav-item .nav-link::after {
-  align-self: center;
+
+.accordion-item {
+  margin-right: 1em;
 }
 
-.dropdown-item {
+.accordion-button {
+  box-shadow: none !important;
+  border-radius: 0.3em !important;
+}
+.accordion-button::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.input-accordion {
+  border: none;
+}
+.input-accordion:focus {
+  appearance: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.input-accordion::placeholder {
   color: #fff;
+}
+.input-accordion:focus::placeholder {
+  opacity: 0;
+}
+
+.btn-appareil,
+.input-appliance {
+  background-color: #20c997 !important;
+}
+
+.btn-ustensil,
+.input-ustensil {
+  background-color: #fd7e14 !important;
+}
+
+.accordion-body {
+  display: grid;
+  grid-template-columns: repeat(3, 33.3333333333%);
+  margin: 0;
 }
 
 .list-ingredient {
@@ -11666,20 +11708,12 @@ nav button:focus {
   background-color: #0a58ca !important;
 }
 
-.btn-appareil {
-  background-color: #20c997 !important;
-}
-
 .list-appliance {
   background-color: #20c997 !important;
 }
 .list-appliance .dropdown-item:hover {
   color: #fff;
   background-color: #1aa179 !important;
-}
-
-.btn-ustensile {
-  background-color: #fd7e14 !important;
 }
 
 .list-ustensil {
@@ -11690,11 +11724,8 @@ nav button:focus {
   background-color: #ca6510 !important;
 }
 
-.list-ingredient.show,
-list-appliance.show,
-.list-ustensil.list-ingredient.show {
-  display: grid;
-  grid-template-columns: repeat(3, 33.3333333333%);
+.dropdown-item {
+  color: #fff;
 }
 
 /******************************************************/
@@ -11727,7 +11758,9 @@ list-appliance.show,
   white-space: nowrap;
 }
 .card .card-body .container-details-recipe .description {
-  white-space: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 /*# sourceMappingURL=styles.css.map */
