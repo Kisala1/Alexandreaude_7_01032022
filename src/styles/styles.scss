@@ -93,26 +93,31 @@ nav {
 .nav-item {
   display: flex;
   margin-bottom: ($spacer * 0.5) !important;
+
 }
 .accordion-item {
+  border: none;
   margin-right: 1em;
 }
 .accordion-button {
   box-shadow: none !important;
-  border-radius: 0.3em !important;
+
   &::after {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   }
 }
+.accordion-button.collapsed {
+  border-radius: 0.3em;
+}
 .accordion-button:not(.collapsed)::after {
+  border-radius: 0em;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
 }
 .input-accordion {
   border: none;
+  color: $white;
   &:focus {
-    appearance: none !important;
-    border: none !important;
-    box-shadow: none !important;
+    outline: none;
   }
   &::placeholder {
     color: $white;
@@ -134,12 +139,37 @@ nav {
 .accordion-body {
   display: grid;
   grid-template-columns: repeat(3, math.div(100%, 3));
+  border-bottom-left-radius: 0.3em;
+  border-bottom-right-radius: 0.3em;
   margin: 0;
+  list-style: none;
+  .accordion-item {
+    white-space: nowrap;
+    padding: 0.2em 1em 0.2em 0.2em;
+  }
 }
 .list-ingredient {
   background-color: $blue;
-
-  .dropdown-item:hover {
+  max-height: 40vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: auto;
+    &-track {
+      background: $blue;
+    }
+    &-thumb {
+      background-color: $blue-700;
+      border-radius: 20px;
+      border: 3px solid $blue;
+    }
+    &-corner {
+      background: $blue;
+    }
+  }
+  .accordion-item {
+    background-color: $blue;
+  }
+  .accordion-item:hover {
     color: $white;
     background-color: $blue-600 !important;
   }
@@ -147,20 +177,54 @@ nav {
 
 .list-appliance {
   background-color: $teal !important;
-  .dropdown-item:hover {
+  .accordion-item {
+    background-color: $teal;
+  }
+  .accordion-item:hover {
     color: $white;
     background-color: $teal-600 !important;
+  }
+  &::-webkit-scrollbar {
+    width: auto;
+    &-track {
+      background: $teal;
+    }
+    &-thumb {
+      background-color: $teal-600;
+      border-radius: 20px;
+      border: 3px solid $teal;
+    }
+    &-corner {
+      background: $blue;
+    }
   }
 }
 
 .list-ustensil {
   background-color: $orange !important;
-  .dropdown-item:hover {
+  .accordion-item {
+    background-color: $orange;
+  }
+  .accordion-item:hover {
     color: $white;
     background-color: $orange-600 !important;
   }
+  &::-webkit-scrollbar {
+    width: auto;
+    &-track {
+      background: $orange;
+    }
+    &-thumb {
+      background-color: $orange-600;
+      border-radius: 20px;
+      border: 3px solid $orange;
+    }
+    &-corner {
+      background: $blue;
+    }
+  }
 }
-.dropdown-item {
+.accordion-item {
   color: $white;
 }
 
@@ -168,6 +232,7 @@ nav {
 /**********************CARDS***************************/
 
 .card {
+  height: 100%;
   img {
     background-color: $gray-500;
     min-height: 10em !important;

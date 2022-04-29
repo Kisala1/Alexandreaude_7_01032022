@@ -125,7 +125,7 @@ export class RecipesView extends EventEmitter {
 
   createIngredientLi(ingredientName) {
     const liElem = document.createElement('li')
-    liElem.classList.add('dropdown-item')
+    liElem.classList.add('accordion-item')
     liElem.textContent = ingredientName
     liElem.addEventListener('click', () => {
       this.emit('addFilter', { type: 'ingredient', name: ingredientName })
@@ -135,7 +135,7 @@ export class RecipesView extends EventEmitter {
 
   createApplianceLi(applianceName) {
     const liElem = document.createElement('li')
-    liElem.classList.add('dropdown-item')
+    liElem.classList.add('accordion-item')
     liElem.textContent = applianceName
     liElem.addEventListener('click', () => {
       this.emit('addFilter', { type: 'appliance', name: applianceName })
@@ -145,7 +145,7 @@ export class RecipesView extends EventEmitter {
 
   createUstensilLi(ustensilName) {
     const liElem = document.createElement('li')
-    liElem.classList.add('dropdown-item')
+    liElem.classList.add('accordion-item')
     liElem.textContent = capitalize(ustensilName)
     liElem.addEventListener('click', () => {
       this.emit('addFilter', { type: 'ustensil', name: ustensilName })

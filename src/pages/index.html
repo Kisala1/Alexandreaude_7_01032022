@@ -51,7 +51,7 @@
           </form>
         </nav>
         <div id="tagSelector" class="tagSelector"></div>
-        <div id="accordion" class="nav-item fw-bold accordion-flush">
+        <div id="accordion" class="nav-item">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
               <button
@@ -78,7 +78,6 @@
               <ul
                 id="tags-ingredients"
                 class="accordion-body list-ingredient"
-                aria-labelledby="navbarDropdown"
               ></ul>
             </div>
           </div>
@@ -143,9 +142,9 @@
 
     <!--------------------Recettes------------------------->
 
-    <div id="card-recipe" class="row g-6 mx-6 my-2"></div>
+    <div id="card-recipe" class="row row-cols-3 g-6 mx-6 my-3 card-recipe"></div>
     <template id="card-recipe-element">
-      <div class="col-sm-4">
+      <div class="col-4">
         <div class="card">
           <img src="" class="card-img-top" alt="..." />
           <div class="card-body">
