@@ -5,9 +5,7 @@ export class RecipesModel extends EventEmitter {
     super()
     this.allRecipes = []
     this.filteredRecipes = []
-
     this.mainSearch = undefined
-
 
     this.filters = { ingredients: [], appliances: [], ustensils: [] }
   }
@@ -52,6 +50,11 @@ export class RecipesModel extends EventEmitter {
       subFilters.splice(removedIndex, 1)
       this.filter()
     }
+  }
+
+  filterTagByInput(all, value, type) {
+    const results = all.filter((el) => el.includes(value))
+    this.emit('changeFilter', { type, values: results })
   }
 
   filter() {

@@ -11,9 +11,11 @@ export class RecipesController {
     this.view = view
 
     model.on('change', (data) => view.render(data))
-
+    model.on('changeFilter', (data) => view.renderAccordion(data.type, data.values))
+    
     view.on('addFilter', ({ type, name }) => model.addFilter(type, name))
     view.on('removeFilter', ({ type, name }) => model.removeFilter(type, name))
+    view.on('keyupInAccordions', ({all, value, type}) => model.filterTagByInput(all, value, type))
   }
 
   load() {

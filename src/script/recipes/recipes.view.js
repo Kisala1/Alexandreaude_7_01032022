@@ -15,7 +15,7 @@ export class RecipesView extends EventEmitter {
     this.tags = document.getElementById('tagSelector')
   }
 
-  render({ recipes, filters, value }) {
+  render({ recipes, filters, value, input }) {
     let allIngredients = new Set()
     let allAppliances = new Set()
     let allUstensils = new Set()
@@ -48,64 +48,23 @@ export class RecipesView extends EventEmitter {
       this.recipesElem.appendChild(this.createRecipe(recipe))
     }
 
-    // Render ingredients dropdown
+    // Render ingredients accordion
     this.ingredientsUl.innerHTML = ''
     for (const ingredientName of allIngredients) {
       this.ingredientsUl.appendChild(this.createIngredientLi(ingredientName))
     }
 
-    this.ingredientSearch.addEventListener('keyup', () => {
-      this.ingredientsUl.innerHTML = ''
-      const valueInputIngt = this.ingredientSearch.value
-
-      if (valueInputIngt.length > 0) {
-        const results = allIngredients.filter((el) =>
-          el.includes(capitalize(valueInputIngt))
-        )
-        for (const result of results) {
-          this.ingredientsUl.appendChild(this.createIngredientLi(result))
-        }
-      }
-    })
-
-    // Render appliances dropdown
+    // Render appliances accordion
     this.appliancesUl.innerHTML = ''
     for (const applianceName of allAppliances) {
       this.appliancesUl.appendChild(this.createApplianceLi(applianceName))
     }
 
-    this.applianceSearch.addEventListener('keyup', () => {
-      this.appliancesUl.innerHTML = ''
-      const valueInputApp = this.applianceSearch.value
-
-      if (valueInputApp.length > 0) {
-        const results = allAppliances.filter((el) =>
-          el.includes(capitalize(valueInputApp))
-        )
-        for (const result of results) {
-          this.appliancesUl.appendChild(this.createApplianceLi(result))
-        }
-      }
-    })
-
-    // Render ustensils dropdown
+    // Render ustensils accordion
     this.ustensilsUl.innerHTML = ''
     for (const ustensilName of allUstensils) {
       this.ustensilsUl.appendChild(this.createUstensilLi(ustensilName))
     }
-
-    this.ustensilSearch.addEventListener('keyup', () => {
-      this.ustensilsUl.innerHTML = ''
-      const valueInputUst = this.ustensilSearch.value
-      if (valueInputUst.length > 0) {
-        const results = allUstensils.filter((el) =>
-          el.includes(capitalize(valueInputUst))
-        )
-        for (const result of results) {
-          this.ustensilsUl.appendChild(this.createUstensilLi(result))
-        }
-      }
-    })
 
     // Render tags
     this.tags.innerHTML = ''
@@ -117,6 +76,54 @@ export class RecipesView extends EventEmitter {
     }
     for (const ustensil of filters.ustensils) {
       this.tags.appendChild(this.createTag('ustensil', ustensil))
+    }
+
+    // Render accordions after input
+    // Ingredients accordion
+    this.ingredientSearch.addEventListener('keyup', () => {
+      const valueInputIngt = this.ingredientSearch.value
+      this.emit('keyupInAccordions', {
+        all: allIngredients,
+        value: valueInputIngt,
+        type: 'ingredient'
+      })
+    })
+    // Appliances accordion
+    this.applianceSearch.addEventListener('keyup', () => {
+      const valueInputApp = this.applianceSearch.value
+      this.emit('keyupInAccordions', {
+        all: allAppliances,
+        value: valueInputApp,
+        type: 'appliance'
+      })
+    })
+    // Ustensils accordion
+    this.ustensilSearch.addEventListener('keyup', () => {
+      const valueInputUst = this.ustensilSearch.value
+      this.emit('keyupInAccordions', {
+        all: allUstensils,
+        value: valueInputUst,
+        type: 'ustensil'
+      })
+    })
+  }
+  renderAccordion(type, values) {
+    let node
+    switch (type) {
+      case 'ingredient':
+        node = this.ingredientsUl
+        break
+      case 'appliance':
+        node = this.appliancesUl
+        break
+      case 'ustensil':
+        node = this.ustensilsUl
+        break
+    }
+    node.innerHTML = ''
+
+    for (const value of values) {
+      node.appendChild(this.createIngredientLi(value))
     }
   }
 
