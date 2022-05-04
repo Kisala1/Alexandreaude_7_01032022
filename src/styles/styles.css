@@ -4630,7 +4630,7 @@ textarea.form-control-lg {
   width: 100%;
   padding: 1rem 1.25rem;
   font-size: 1rem;
-  color: #212529;
+  color: #fff;
   text-align: left;
   background-color: #fff;
   border: 0;
@@ -4644,12 +4644,12 @@ textarea.form-control-lg {
   }
 }
 .accordion-button:not(.collapsed) {
-  color: #0c63e4;
+  color: #fff;
   background-color: #e7f1ff;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
 }
 .accordion-button:not(.collapsed)::after {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   transform: rotate(-180deg);
 }
 .accordion-button::after {
@@ -4658,7 +4658,7 @@ textarea.form-control-lg {
   height: 1.25rem;
   margin-left: auto;
   content: "";
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-size: 1.25rem;
   transition: transform 0.2s ease-in-out;
@@ -11648,7 +11648,7 @@ nav button:focus {
 
 /************/
 /*****************DROPDOWNS**********************/
-.nav-item {
+.accordion {
   display: flex;
   margin-bottom: 0.5rem !important;
 }
@@ -11708,7 +11708,7 @@ nav button:focus {
 }
 .accordion-body .accordion-item {
   white-space: nowrap;
-  padding: 0.2em 1em 0.2em 0.2em;
+  margin: 0.2em 1em 0.2em 0.2em;
 }
 
 .list-ingredient {
@@ -11824,10 +11824,11 @@ nav button:focus {
 .card .card-body .container-details-recipe .ingredients-recipe .ingredient-recipe {
   white-space: nowrap;
 }
-.card .card-body .container-details-recipe .description {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
+.card .card-body .description {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  white-space: normal;
 }
 
 /*# sourceMappingURL=styles.css.map */

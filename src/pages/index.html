@@ -28,7 +28,7 @@
             <input
               class="form-control me-0 border-2 main-search"
               type="search"
-              placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette"
+              placeholder="Rechercher un ingrédient, appareil, ustensile ou une recette"
               aria-label="Search"
             />
             <button
@@ -51,7 +51,7 @@
           </form>
         </nav>
         <div id="tagSelector" class="tagSelector"></div>
-        <div id="accordion" class="nav-item">
+        <div id="accordion" class="accordion">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
               <button
@@ -63,6 +63,7 @@
                 aria-controls="collapseOne"
               >
                 <input
+                  id="input-ingredient"
                   class="input-accordion bg-primary"
                   type="text"
                   placeholder="Ingrédients"
@@ -92,6 +93,7 @@
                 aria-controls="collapseTwo"
               >
                 <input
+                  id="input-appliance"
                   class="input-accordion input-appliance"
                   type="text"
                   placeholder="Appareils"
@@ -121,6 +123,7 @@
                 aria-controls="collapseThree"
               >
                 <input
+                  id="input-ustensil"
                   class="input-accordion input-ustensil"
                   type="text"
                   placeholder="Ustensiles"
@@ -142,7 +145,10 @@
 
     <!--------------------Recettes------------------------->
 
-    <div id="card-recipe" class="row row-cols-3 g-6 mx-6 my-3 card-recipe"></div>
+    <div
+      id="card-recipe"
+      class="row row-cols-3 g-6 mx-6 my-3 card-recipe"
+    ></div>
     <template id="card-recipe-element">
       <div class="col-4">
         <div class="card">
@@ -172,7 +178,9 @@
             </div>
             <div class="container-details-recipe">
               <ul class="ingredients-recipe list-inline list-unstyled"></ul>
-              <p class="card-text text-truncate description"></p>
+              <div class="container-desc">
+                <p class="card-text text-truncate description"></p>
+              </div>
             </div>
           </div>
         </div>

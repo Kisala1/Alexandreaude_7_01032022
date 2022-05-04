@@ -90,10 +90,9 @@ nav {
 }
 /************/
 /*****************DROPDOWNS**********************/
-.nav-item {
+.accordion {
   display: flex;
   margin-bottom: ($spacer * 0.5) !important;
-
 }
 .accordion-item {
   border: none;
@@ -145,7 +144,7 @@ nav {
   list-style: none;
   .accordion-item {
     white-space: nowrap;
-    padding: 0.2em 1em 0.2em 0.2em;
+    margin: 0.2em 1em 0.2em 0.2em;
   }
 }
 .list-ingredient {
@@ -230,7 +229,6 @@ nav {
 
 /******************************************************/
 /**********************CARDS***************************/
-
 .card {
   height: 100%;
   img {
@@ -259,11 +257,13 @@ nav {
           white-space: nowrap;
         }
       }
-      .description {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
+    }
+
+    .description {
+      display: -webkit-box !important;
+      -webkit-line-clamp: 6;
+      -webkit-box-orient: vertical;
+      white-space: normal;
     }
   }
 }

@@ -8,11 +8,14 @@ export class RecipesView extends EventEmitter {
     this.ingredientsUl = document.getElementById('tags-ingredients')
     this.appliancesUl = document.getElementById('tags-appliances')
     this.ustensilsUl = document.getElementById('tags-ustensils')
+    this.ingredientSearch = document.getElementById('input-ingredient')
+    this.applianceSearch = document.getElementById('input-appliance')
+    this.ustensilSearch = document.getElementById('input-ustensil')
 
     this.tags = document.getElementById('tagSelector')
   }
 
-  render({ recipes, filters }) {
+  render({ recipes, filters, value }) {
     let allIngredients = new Set()
     let allAppliances = new Set()
     let allUstensils = new Set()
@@ -51,17 +54,58 @@ export class RecipesView extends EventEmitter {
       this.ingredientsUl.appendChild(this.createIngredientLi(ingredientName))
     }
 
+    this.ingredientSearch.addEventListener('keyup', () => {
+      this.ingredientsUl.innerHTML = ''
+      const valueInputIngt = this.ingredientSearch.value
+
+      if (valueInputIngt.length > 0) {
+        const results = allIngredients.filter((el) =>
+          el.includes(capitalize(valueInputIngt))
+        )
+        for (const result of results) {
+          this.ingredientsUl.appendChild(this.createIngredientLi(result))
+        }
+      }
+    })
+
     // Render appliances dropdown
     this.appliancesUl.innerHTML = ''
     for (const applianceName of allAppliances) {
       this.appliancesUl.appendChild(this.createApplianceLi(applianceName))
     }
 
+    this.applianceSearch.addEventListener('keyup', () => {
+      this.appliancesUl.innerHTML = ''
+      const valueInputApp = this.applianceSearch.value
+
+      if (valueInputApp.length > 0) {
+        const results = allAppliances.filter((el) =>
+          el.includes(capitalize(valueInputApp))
+        )
+        for (const result of results) {
+          this.appliancesUl.appendChild(this.createApplianceLi(result))
+        }
+      }
+    })
+
     // Render ustensils dropdown
     this.ustensilsUl.innerHTML = ''
     for (const ustensilName of allUstensils) {
       this.ustensilsUl.appendChild(this.createUstensilLi(ustensilName))
     }
+
+    this.ustensilSearch.addEventListener('keyup', () => {
+      this.ustensilsUl.innerHTML = ''
+      const valueInputUst = this.ustensilSearch.value
+      if (valueInputUst.length > 0) {
+        const results = allUstensils.filter((el) =>
+          el.includes(capitalize(valueInputUst))
+        )
+        for (const result of results) {
+          this.ustensilsUl.appendChild(this.createUstensilLi(result))
+        }
+      }
+    })
 
     // Render tags
     this.tags.innerHTML = ''

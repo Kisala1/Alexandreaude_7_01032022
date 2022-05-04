@@ -7,6 +7,8 @@ export class RecipesModel extends EventEmitter {
     this.filteredRecipes = []
 
     this.mainSearch = undefined
+
+
     this.filters = { ingredients: [], appliances: [], ustensils: [] }
   }
 

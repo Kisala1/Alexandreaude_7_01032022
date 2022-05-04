@@ -11,5 +11,5 @@ export function capitalize(str) {
  * @returns {string}
  */
 export function compareIgnoreCase(a, b) {
-  return a.localeCompare(b)
+  return a.localeCompare(b, 'fr', {ignorePunctuation: true})
 }
