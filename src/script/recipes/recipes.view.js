@@ -1,5 +1,5 @@
 import { EventEmitter } from '../util/event-emitter.js'
-import { capitalize, compareIgnoreCase } from '../util/utils.js'
+import { capitalize, tiny, compareIgnoreCase } from '../util/utils.js'
 
 export class RecipesView extends EventEmitter {
   constructor() {
@@ -15,7 +15,7 @@ export class RecipesView extends EventEmitter {
     this.tags = document.getElementById('tagSelector')
   }
 
-  render({ recipes, filters, value, input }) {
+  render({ recipes, filters }) {
     let allIngredients = new Set()
     let allAppliances = new Set()
     let allUstensils = new Set()
@@ -24,16 +24,16 @@ export class RecipesView extends EventEmitter {
       // Collect ingredients
       for (const ingredient of recipe.ingredients) {
         if (!allIngredients.has(ingredient)) {
-          allIngredients.add(ingredient.ingredient)
+          allIngredients.add(tiny(ingredient.ingredient))
         }
       }
 
       // Collect appliances
-      allAppliances.add(recipe.appliance)
+      allAppliances.add(tiny(recipe.appliance))
 
       // Collect ustensils
       for (const ustensil of recipe.ustensils) {
-        allUstensils.add(ustensil)
+        allUstensils.add(tiny(ustensil))
       }
     }
 
@@ -41,7 +41,6 @@ export class RecipesView extends EventEmitter {
     allIngredients = [...allIngredients].sort(compareIgnoreCase)
     allAppliances = [...allAppliances].sort(compareIgnoreCase)
     allUstensils = [...allUstensils].sort(compareIgnoreCase)
-
     // Render recipes cards
     this.recipesElem.innerHTML = ''
     for (const recipe of recipes) {
@@ -52,6 +51,7 @@ export class RecipesView extends EventEmitter {
     this.ingredientsUl.innerHTML = ''
     for (const ingredientName of allIngredients) {
       this.ingredientsUl.appendChild(this.createIngredientLi(ingredientName))
+      // this.emit('removeTagAfterClick', {container: this.ingredientsUl, name: ingredientName})
     }
 
     // Render appliances accordion
@@ -82,6 +82,7 @@ export class RecipesView extends EventEmitter {
     // Ingredients accordion
     this.ingredientSearch.addEventListener('keyup', () => {
       const valueInputIngt = this.ingredientSearch.value
+
       this.emit('keyupInAccordions', {
         all: allIngredients,
         value: valueInputIngt,
@@ -109,21 +110,25 @@ export class RecipesView extends EventEmitter {
   }
   renderAccordion(type, values) {
     let node
+    let createEl
     switch (type) {
       case 'ingredient':
         node = this.ingredientsUl
+        createEl = this.createIngredientLi
         break
       case 'appliance':
         node = this.appliancesUl
+        createEl = this.createApplianceLi
         break
       case 'ustensil':
         node = this.ustensilsUl
+        createEl = this.createUstensilLi
         break
     }
     node.innerHTML = ''
 
     for (const value of values) {
-      node.appendChild(this.createIngredientLi(value))
+      node.appendChild(createEl(value))
     }
   }
 
@@ -177,9 +182,12 @@ export class RecipesView extends EventEmitter {
   createIngredientLi(ingredientName) {
     const liElem = document.createElement('li')
     liElem.classList.add('accordion-item')
-    liElem.textContent = ingredientName
+    liElem.textContent = capitalize(ingredientName)
     liElem.addEventListener('click', () => {
-      this.emit('addFilter', { type: 'ingredient', name: ingredientName })
+      this.emit('addFilter', {
+        type: 'ingredient',
+        name: ingredientName
+      })
     })
     return liElem
   }
@@ -187,7 +195,7 @@ export class RecipesView extends EventEmitter {
   createApplianceLi(applianceName) {
     const liElem = document.createElement('li')
     liElem.classList.add('accordion-item')
-    liElem.textContent = applianceName
+    liElem.textContent = capitalize(applianceName)
     liElem.addEventListener('click', () => {
       this.emit('addFilter', { type: 'appliance', name: applianceName })
     })

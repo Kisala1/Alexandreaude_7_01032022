@@ -1,4 +1,5 @@
 import { EventEmitter } from '../util/event-emitter.js'
+import { tiny } from '../util/utils.js'
 
 export class RecipesModel extends EventEmitter {
   constructor() {
@@ -14,8 +15,7 @@ export class RecipesModel extends EventEmitter {
     this.allRecipes = recipes
     this.filter()
   }
-
-  addFilter(type, name) {
+  addFilter(type, name, container) {
     let subFilters
     if (type === 'ingredient') {
       subFilters = this.filters.ingredients
@@ -51,6 +51,9 @@ export class RecipesModel extends EventEmitter {
       this.filter()
     }
   }
+  
+ 
+  
 
   filterTagByInput(all, value, type) {
     const results = all.filter((el) => el.includes(value))
@@ -71,7 +74,7 @@ export class RecipesModel extends EventEmitter {
       for (const ingredientFilter of this.filters.ingredients) {
         if (
           recipe.ingredients.findIndex(
-            (el) => el.ingredient === ingredientFilter
+            (el) => tiny(el.ingredient) === ingredientFilter
           ) === -1
         ) {
           return false
@@ -80,16 +83,17 @@ export class RecipesModel extends EventEmitter {
 
       // Filter appliances
       for (const applianceFilter of this.filters.appliances) {
-        if (recipe.appliance !== applianceFilter) {
+        if (tiny(recipe.appliance) !== applianceFilter) {
           return false
         }
       }
 
       // Filter ustensils
+
       for (const ustensilFilter of this.filters.ustensils) {
         if (
           recipe.ustensils.findIndex(
-            (ustensil) => ustensil === ustensilFilter
+            (ustensil) => tiny(ustensil) === ustensilFilter
           ) === -1
         ) {
           return false
