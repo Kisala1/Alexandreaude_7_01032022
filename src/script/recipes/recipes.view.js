@@ -107,7 +107,38 @@ export class RecipesView extends EventEmitter {
         type: 'ustensil'
       })
     })
+
+    // Modifie placeholder
+    const accordion = document.getElementById('accordion')
+    accordion.addEventListener('click', (e) => {
+      if (e.target === document.getElementById('accordion-button-ingt')) {
+        const inputIngt = document.getElementById('input-ingredient')
+        if (!e.target.classList.contains('collapsed')) {
+          inputIngt.setAttribute('placeholder', 'Rechercher un ingrédient')
+        } else {
+          inputIngt.setAttribute('placeholder', 'Ingrédients')
+        }
+      }
+      if (e.target === document.getElementById('accordion-button-app')) {
+        const inputApp = document.getElementById('input-appliance')
+        if (!e.target.classList.contains('collapsed')) {
+          inputApp.setAttribute('placeholder', 'Rechercher un appareil')
+        } else {
+          inputApp.setAttribute('placeholder', 'Appareils')
+        }
+      }
+      if (e.target === document.getElementById('accordion-button-ust')) {
+        const inputUst = document.getElementById('input-ustensil')
+        if (!e.target.classList.contains('collapsed')) {
+          inputUst.setAttribute('placeholder', 'Rechercher un ustensile')
+        } else {
+          inputUst.setAttribute('placeholder', 'Ustensiles')
+        }
+      }
+    })
   }
+
+  // Créer les li dans accordions après avoir sélectionné un tag
   renderAccordion(type, values) {
     let node
     let createEl
@@ -181,7 +212,7 @@ export class RecipesView extends EventEmitter {
 
   createIngredientLi(ingredientName) {
     const liElem = document.createElement('li')
-    liElem.classList.add('accordion-item')
+    liElem.classList.add('tag-item')
     liElem.textContent = capitalize(ingredientName)
     liElem.addEventListener('click', () => {
       this.emit('addFilter', {
@@ -194,7 +225,7 @@ export class RecipesView extends EventEmitter {
 
   createApplianceLi(applianceName) {
     const liElem = document.createElement('li')
-    liElem.classList.add('accordion-item')
+    liElem.classList.add('tag-item')
     liElem.textContent = capitalize(applianceName)
     liElem.addEventListener('click', () => {
       this.emit('addFilter', { type: 'appliance', name: applianceName })
@@ -204,7 +235,7 @@ export class RecipesView extends EventEmitter {
 
   createUstensilLi(ustensilName) {
     const liElem = document.createElement('li')
-    liElem.classList.add('accordion-item')
+    liElem.classList.add('tag-item')
     liElem.textContent = capitalize(ustensilName)
     liElem.addEventListener('click', () => {
       this.emit('addFilter', { type: 'ustensil', name: ustensilName })

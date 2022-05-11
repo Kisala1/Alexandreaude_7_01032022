@@ -15,7 +15,7 @@ export class RecipesModel extends EventEmitter {
     this.allRecipes = recipes
     this.filter()
   }
-  addFilter(type, name, container) {
+  addFilter(type, name) {
     let subFilters
     if (type === 'ingredient') {
       subFilters = this.filters.ingredients
@@ -51,9 +51,6 @@ export class RecipesModel extends EventEmitter {
       this.filter()
     }
   }
-  
- 
-  
 
   filterTagByInput(all, value, type) {
     const results = all.filter((el) => el.includes(value))

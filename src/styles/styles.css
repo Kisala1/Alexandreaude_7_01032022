@@ -11654,7 +11654,7 @@ nav button:focus {
 }
 
 .accordion-item {
-  border: none;
+  border: none !important;
   margin-right: 1em;
 }
 
@@ -11701,19 +11701,24 @@ nav button:focus {
 .accordion-body {
   display: grid;
   grid-template-columns: repeat(3, 33.3333333333%);
+  max-height: 30vh;
   border-bottom-left-radius: 0.3em;
   border-bottom-right-radius: 0.3em;
+  padding: 1em !important;
   margin: 0;
   list-style: none;
 }
-.accordion-body .accordion-item {
+.accordion-body .tag-item {
+  cursor: pointer;
+  color: #fff;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0.2em 1em 0.2em 0.2em;
 }
 
 .list-ingredient {
   background-color: #0d6efd;
-  max-height: 40vh;
   overflow-y: scroll;
 }
 .list-ingredient::-webkit-scrollbar {
@@ -11730,23 +11735,17 @@ nav button:focus {
 .list-ingredient::-webkit-scrollbar-corner {
   background: #0d6efd;
 }
-.list-ingredient .accordion-item {
+.list-ingredient .tag-item {
   background-color: #0d6efd;
 }
-.list-ingredient .accordion-item:hover {
+.list-ingredient .tag-item:hover {
   color: #fff;
   background-color: #0a58ca !important;
 }
 
 .list-appliance {
   background-color: #20c997 !important;
-}
-.list-appliance .accordion-item {
-  background-color: #20c997;
-}
-.list-appliance .accordion-item:hover {
-  color: #fff;
-  background-color: #1aa179 !important;
+  overflow-y: scroll;
 }
 .list-appliance::-webkit-scrollbar {
   width: auto;
@@ -11762,16 +11761,17 @@ nav button:focus {
 .list-appliance::-webkit-scrollbar-corner {
   background: #0d6efd;
 }
+.list-appliance .tag-item {
+  background-color: #20c997;
+}
+.list-appliance .tag-item:hover {
+  color: #fff;
+  background-color: #1aa179 !important;
+}
 
 .list-ustensil {
   background-color: #fd7e14 !important;
-}
-.list-ustensil .accordion-item {
-  background-color: #fd7e14;
-}
-.list-ustensil .accordion-item:hover {
-  color: #fff;
-  background-color: #ca6510 !important;
+  overflow-y: scroll;
 }
 .list-ustensil::-webkit-scrollbar {
   width: auto;
@@ -11787,9 +11787,12 @@ nav button:focus {
 .list-ustensil::-webkit-scrollbar-corner {
   background: #0d6efd;
 }
-
-.accordion-item {
+.list-ustensil .tag-item {
+  background-color: #fd7e14;
+}
+.list-ustensil .tag-item:hover {
   color: #fff;
+  background-color: #ca6510 !important;
 }
 
 /******************************************************/
