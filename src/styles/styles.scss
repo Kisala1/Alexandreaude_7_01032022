@@ -98,6 +98,9 @@ nav {
   border: none !important;
   margin-right: 1em;
 }
+.half-width {
+  min-width: 50%;
+}
 .accordion-button {
   box-shadow: none !important;
 
@@ -151,6 +154,7 @@ nav {
   .tag-item {
     // position: relative;
     cursor: pointer;
+    width: 100%;
     color: $white;
     white-space: nowrap;
     overflow: hidden;

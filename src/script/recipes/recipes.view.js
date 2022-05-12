@@ -11,6 +11,7 @@ export class RecipesView extends EventEmitter {
     this.ingredientSearch = document.getElementById('input-ingredient')
     this.applianceSearch = document.getElementById('input-appliance')
     this.ustensilSearch = document.getElementById('input-ustensil')
+    this.mainSearch = document.getElementById('main-search')
 
     this.tags = document.getElementById('tagSelector')
   }
@@ -41,17 +42,20 @@ export class RecipesView extends EventEmitter {
     allIngredients = [...allIngredients].sort(compareIgnoreCase)
     allAppliances = [...allAppliances].sort(compareIgnoreCase)
     allUstensils = [...allUstensils].sort(compareIgnoreCase)
+
     // Render recipes cards
     this.recipesElem.innerHTML = ''
     for (const recipe of recipes) {
       this.recipesElem.appendChild(this.createRecipe(recipe))
     }
-
+    this.mainSearch.addEventListener('keyup', () => {
+      const mainSearchValue = tiny(this.mainSearch.value)
+      this.emit('filterByMainSearch', { value: mainSearchValue })
+    })
     // Render ingredients accordion
     this.ingredientsUl.innerHTML = ''
     for (const ingredientName of allIngredients) {
       this.ingredientsUl.appendChild(this.createIngredientLi(ingredientName))
-      // this.emit('removeTagAfterClick', {container: this.ingredientsUl, name: ingredientName})
     }
 
     // Render appliances accordion
@@ -110,29 +114,50 @@ export class RecipesView extends EventEmitter {
 
     // Modifie placeholder
     const accordion = document.getElementById('accordion')
-    accordion.addEventListener('click', (e) => {
-      if (e.target === document.getElementById('accordion-button-ingt')) {
+    accordion.addEventListener('click', () => {
+      const accordionIngt = document.getElementById('accordion-item-ingt')
+      if (accordionIngt.click) {
         const inputIngt = document.getElementById('input-ingredient')
-        if (!e.target.classList.contains('collapsed')) {
+        if (
+          !document
+            .getElementById('accordion-button-ingt')
+            .classList.contains('collapsed')
+        ) {
           inputIngt.setAttribute('placeholder', 'Rechercher un ingrédient')
+          inputIngt.closest('.accordion-item').classList.add('half-width')
         } else {
           inputIngt.setAttribute('placeholder', 'Ingrédients')
+          inputIngt.closest('.accordion-item').classList.remove('half-width')
         }
       }
-      if (e.target === document.getElementById('accordion-button-app')) {
+      const accordionApp = document.getElementById('accordion-item-app')
+      if (accordionApp.click) {
         const inputApp = document.getElementById('input-appliance')
-        if (!e.target.classList.contains('collapsed')) {
+        if (
+          !document
+            .getElementById('accordion-button-app')
+            .classList.contains('collapsed')
+        ) {
           inputApp.setAttribute('placeholder', 'Rechercher un appareil')
+          inputApp.closest('.accordion-item').classList.add('half-width')
         } else {
           inputApp.setAttribute('placeholder', 'Appareils')
+          inputApp.closest('.accordion-item').classList.remove('half-width')
         }
       }
-      if (e.target === document.getElementById('accordion-button-ust')) {
+      const accordionUst = document.getElementById('accordion-item-ust')
+      if (accordionUst.click) {
         const inputUst = document.getElementById('input-ustensil')
-        if (!e.target.classList.contains('collapsed')) {
+        if (
+          !document
+            .getElementById('accordion-button-ust')
+            .classList.contains('collapsed')
+        ) {
           inputUst.setAttribute('placeholder', 'Rechercher un ustensile')
+          inputUst.closest('.accordion-item').classList.add('half-width')
         } else {
           inputUst.setAttribute('placeholder', 'Ustensiles')
+          inputUst.closest('.accordion-item').classList.remove('half-width')
         }
       }
     })

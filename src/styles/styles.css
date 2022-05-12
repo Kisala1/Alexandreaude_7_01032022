@@ -11658,6 +11658,10 @@ nav button:focus {
   margin-right: 1em;
 }
 
+.half-width {
+  min-width: 50%;
+}
+
 .accordion-button {
   box-shadow: none !important;
 }
@@ -11710,6 +11714,7 @@ nav button:focus {
 }
 .accordion-body .tag-item {
   cursor: pointer;
+  width: 100%;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
