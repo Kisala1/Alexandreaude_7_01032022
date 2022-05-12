@@ -11664,8 +11664,8 @@ nav button:focus {
 }
 .filter .filter-btn {
   display: flex;
-  padding: 5px;
-  border-radius: 5px;
+  padding: 0.8em;
+  border-radius: 0.3em;
 }
 .filter input[type=text] {
   flex: 1;
@@ -11689,10 +11689,18 @@ nav button:focus {
 .filter ul {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0.5em 0.3em;
+  border-radius: 0.3em;
+  border-top-left-radius: 0;
   max-height: 40vh;
   overflow-y: auto;
   display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5em;
+}
+.filter ul li {
+  padding: 0.2em;
+  white-space: nowrap;
 }
 .filter ul li:hover {
   background: rgba(0, 0, 0, 0.1);
@@ -11711,6 +11719,10 @@ nav button:focus {
   background: transparent;
 }
 
+.filter:focus-within .filter-btn {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
 .filter:focus-within .bi-chevron-down::before {
   transform: rotate(-180deg);
 }
@@ -11726,167 +11738,6 @@ nav button:focus {
 .filter.ustensils .filter-btn,
 .filter.ustensils ul {
   background: #fd7e14;
-}
-
-.accordion {
-  display: flex;
-  margin-bottom: 0.5rem !important;
-}
-
-.accordion-item {
-  border: none !important;
-  margin-right: 1em;
-}
-
-.accordion-button {
-  box-shadow: none !important;
-  justify-content: end;
-}
-.accordion-button .bi-chevron-down {
-  position: absolute;
-}
-.accordion-button .bi-chevron-down::before {
-  font-size: large;
-  transition: transform 0.2s ease-in-out;
-}
-.accordion-button::after {
-  background-image: none;
-}
-
-.accordion-button.collapsed {
-  border-radius: 0.3em;
-}
-
-.accordion-button:not(.collapsed) {
-  border-top-left-radius: 0.3em;
-  border-top-right-radius: 0.3em;
-}
-.accordion-button:not(.collapsed) .bi-chevron-down::before {
-  transform: rotate(-180deg);
-}
-
-.accordion-button:not(.collapsed)::after {
-  background-image: none;
-}
-
-.input-accordion {
-  border: none;
-  color: #fff;
-}
-.input-accordion:focus {
-  outline: none;
-}
-.input-accordion::placeholder {
-  color: #fff;
-}
-.input-accordion:focus::placeholder {
-  opacity: 0;
-}
-
-.btn-appareil,
-.input-appliance {
-  background-color: #20c997 !important;
-}
-
-.btn-ustensil,
-.input-ustensil {
-  background-color: #fd7e14 !important;
-}
-
-.accordion-body {
-  display: grid;
-  grid-template-columns: repeat(3, 33.3333333333%);
-  max-height: 30vh;
-  border-bottom-left-radius: 0.3em;
-  border-bottom-right-radius: 0.3em;
-  padding: 1em !important;
-  margin: 0;
-  list-style: none;
-}
-.accordion-body .tag-item {
-  cursor: pointer;
-  width: 100%;
-  color: #fff;
-  white-space: nowrap;
-  margin: 0.2em 1em 0.2em 0.2em;
-}
-
-.list-ingredient {
-  background-color: #0d6efd;
-  overflow-y: scroll;
-}
-.list-ingredient::-webkit-scrollbar {
-  width: auto;
-}
-.list-ingredient::-webkit-scrollbar-track {
-  background: #0d6efd;
-}
-.list-ingredient::-webkit-scrollbar-thumb {
-  background-color: #084298;
-  border-radius: 20px;
-  border: 3px solid #0d6efd;
-}
-.list-ingredient::-webkit-scrollbar-corner {
-  background: #0d6efd;
-}
-.list-ingredient .tag-item {
-  background-color: #0d6efd;
-}
-.list-ingredient .tag-item:hover {
-  color: #fff;
-  background-color: #0a58ca !important;
-}
-
-.list-appliance {
-  background-color: #20c997 !important;
-  overflow-y: scroll;
-}
-.list-appliance::-webkit-scrollbar {
-  width: auto;
-}
-.list-appliance::-webkit-scrollbar-track {
-  background: #20c997;
-}
-.list-appliance::-webkit-scrollbar-thumb {
-  background-color: #1aa179;
-  border-radius: 20px;
-  border: 3px solid #20c997;
-}
-.list-appliance::-webkit-scrollbar-corner {
-  background: #0d6efd;
-}
-.list-appliance .tag-item {
-  background-color: #20c997;
-}
-.list-appliance .tag-item:hover {
-  color: #fff;
-  background-color: #1aa179 !important;
-}
-
-.list-ustensil {
-  background-color: #fd7e14 !important;
-  overflow-y: scroll;
-}
-.list-ustensil::-webkit-scrollbar {
-  width: auto;
-}
-.list-ustensil::-webkit-scrollbar-track {
-  background: #fd7e14;
-}
-.list-ustensil::-webkit-scrollbar-thumb {
-  background-color: #ca6510;
-  border-radius: 20px;
-  border: 3px solid #fd7e14;
-}
-.list-ustensil::-webkit-scrollbar-corner {
-  background: #0d6efd;
-}
-.list-ustensil .tag-item {
-  background-color: #fd7e14;
-}
-.list-ustensil .tag-item:hover {
-  color: #fff;
-  background-color: #ca6510 !important;
 }
 
 /******************************************************/

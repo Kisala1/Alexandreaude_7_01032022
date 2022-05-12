@@ -109,9 +109,8 @@ nav {
   .filter-btn {
     display: flex;
 
-    padding: 5px;
-    border-radius: 5px;
-    // TODO
+    padding: 0.8em;
+    border-radius: 0.3em;
   }
 
   input[type='text'] {
@@ -141,15 +140,20 @@ nav {
   ul {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0.5em 0.3em;
+    border-radius: 0.3em;
+    border-top-left-radius: 0;
 
     max-height: 40vh;
     overflow-y: auto;
 
     display: grid;
-    // TODO
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5em;
 
     li {
+      padding: 0.2em;
+      white-space: nowrap;
       &:hover {
         background: rgba(0, 0, 0, 0.1);
       }
@@ -172,6 +176,10 @@ nav {
 }
 
 .filter:focus-within {
+  .filter-btn {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
   .bi-chevron-down::before {
     transform: rotate(-180deg);
   }
@@ -192,170 +200,6 @@ nav {
   .filter-btn,
   ul {
     background: $orange;
-  }
-}
-
-//////////////////////////////////////////////////
-
-.accordion {
-  display: flex;
-  margin-bottom: ($spacer * 0.5) !important;
-}
-.accordion-item {
-  border: none !important;
-  margin-right: 1em;
-}
-.accordion-button {
-  box-shadow: none !important;
-  justify-content: end;
-  .bi-chevron-down {
-    position: absolute;
-  }
-  .bi-chevron-down::before {
-    font-size: large;
-    transition: transform 0.2s ease-in-out;
-  }
-  &::after {
-    background-image: none;
-  }
-}
-.accordion-button.collapsed {
-  border-radius: 0.3em;
-}
-.accordion-button:not(.collapsed) {
-  border-top-left-radius: 0.3em;
-  border-top-right-radius: 0.3em;
-  .bi-chevron-down::before {
-    transform: rotate(-180deg);
-  }
-}
-.accordion-button:not(.collapsed)::after {
-  background-image: none;
-}
-
-.input-accordion {
-  border: none;
-  color: $white;
-  &:focus {
-    outline: none;
-  }
-  &::placeholder {
-    color: $white;
-  }
-  &:focus::placeholder {
-    opacity: 0;
-  }
-}
-
-.btn-appareil,
-.input-appliance {
-  background-color: $teal !important;
-}
-
-.btn-ustensil,
-.input-ustensil {
-  background-color: $orange !important;
-}
-
-.accordion-body {
-  display: grid;
-  grid-template-columns: repeat(3, math.div(100%, 3));
-  max-height: 30vh;
-  border-bottom-left-radius: 0.3em;
-  border-bottom-right-radius: 0.3em;
-  padding: 1em !important;
-  margin: 0;
-  list-style: none;
-  // position: absolute;
-  // z-index: 100;
-  .tag-item {
-    // position: relative;
-    cursor: pointer;
-    width: 100%;
-    color: $white;
-    white-space: nowrap;
-    margin: 0.2em 1em 0.2em 0.2em;
-  }
-}
-
-.list-ingredient {
-  background-color: $blue;
-
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    width: auto;
-    &-track {
-      background: $blue;
-    }
-    &-thumb {
-      background-color: $blue-700;
-      border-radius: 20px;
-      border: 3px solid $blue;
-    }
-    &-corner {
-      background: $blue;
-    }
-  }
-  .tag-item {
-    background-color: $blue;
-    &:hover {
-      color: $white;
-      background-color: $blue-600 !important;
-    }
-  }
-}
-
-.list-appliance {
-  background-color: $teal !important;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    width: auto;
-    &-track {
-      background: $teal;
-    }
-    &-thumb {
-      background-color: $teal-600;
-      border-radius: 20px;
-      border: 3px solid $teal;
-    }
-    &-corner {
-      background: $blue;
-    }
-  }
-  .tag-item {
-    background-color: $teal;
-    &:hover {
-      color: $white;
-      background-color: $teal-600 !important;
-    }
-  }
-}
-
-.list-ustensil {
-  background-color: $orange !important;
-  overflow-y: scroll;
-
-  &::-webkit-scrollbar {
-    width: auto;
-    &-track {
-      background: $orange;
-    }
-    &-thumb {
-      background-color: $orange-600;
-      border-radius: 20px;
-      border: 3px solid $orange;
-    }
-    &-corner {
-      background: $blue;
-    }
-  }
-  .tag-item {
-    background-color: $orange;
-    &:hover {
-      color: $white;
-      background-color: $orange-600 !important;
-    }
   }
 }
 
