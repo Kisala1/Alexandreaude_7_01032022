@@ -1,5 +1,5 @@
 import { EventEmitter } from '../util/event-emitter.js'
-import { capitalize, tiny, compareIgnoreCase } from '../util/utils.js'
+import { capitalize, tiny, compareIgnoreCase, match } from '../util/utils.js'
 
 export class RecipesView extends EventEmitter {
   constructor() {
@@ -8,15 +8,51 @@ export class RecipesView extends EventEmitter {
     this.ingredientsUl = document.getElementById('tags-ingredients')
     this.appliancesUl = document.getElementById('tags-appliances')
     this.ustensilsUl = document.getElementById('tags-ustensils')
-    this.ingredientSearch = document.getElementById('input-ingredient')
-    this.applianceSearch = document.getElementById('input-appliance')
-    this.ustensilSearch = document.getElementById('input-ustensil')
-    this.mainSearch = document.getElementById('main-search')
+    this.ingredientSearch = document.getElementById('input-ingredients')
+    this.applianceSearch = document.getElementById('input-appliances')
+    this.ustensilSearch = document.getElementById('input-ustensils')
+    // this.mainSearch = document.getElementById('main-search')
 
     this.tags = document.getElementById('tagSelector')
+
+    this.registerListener()
   }
 
-  render({ recipes, filters }) {
+  registerListener() {
+    // this.mainSearch.addEventListener('keyup', () => {
+    //   const mainSearchValue = tiny(this.mainSearch.value)
+    //   this.emit('searchContent', { value: mainSearchValue })
+    // })
+
+    // Ingredients dropdown
+    this.ingredientSearch.addEventListener('input', () => {
+      const valueInputIngt = this.ingredientSearch.value
+      this.emit('searchFilter', {
+        value: valueInputIngt,
+        type: 'ingredients'
+      })
+    })
+
+    // Appliances dropdown
+    this.applianceSearch.addEventListener('input', () => {
+      const valueInputApp = this.applianceSearch.value
+      this.emit('searchFilter', {
+        value: valueInputApp,
+        type: 'appliances'
+      })
+    })
+
+    // Ustensils dropdown
+    this.ustensilSearch.addEventListener('input', () => {
+      const valueInputUst = this.ustensilSearch.value
+      this.emit('searchFilter', {
+        value: valueInputUst,
+        type: 'ustensils'
+      })
+    })
+  }
+
+  render({ recipes, filters, filtersSearch }) {
     let allIngredients = new Set()
     let allAppliances = new Set()
     let allUstensils = new Set()
@@ -24,9 +60,7 @@ export class RecipesView extends EventEmitter {
     for (const recipe of recipes) {
       // Collect ingredients
       for (const ingredient of recipe.ingredients) {
-        if (!allIngredients.has(ingredient)) {
-          allIngredients.add(tiny(ingredient.ingredient))
-        }
+        allIngredients.add(tiny(ingredient.ingredient))
       }
 
       // Collect appliances
@@ -48,26 +82,34 @@ export class RecipesView extends EventEmitter {
     for (const recipe of recipes) {
       this.recipesElem.appendChild(this.createRecipe(recipe))
     }
-    this.mainSearch.addEventListener('keyup', () => {
-      const mainSearchValue = tiny(this.mainSearch.value)
-      this.emit('filterByMainSearch', { value: mainSearchValue })
-    })
     // Render ingredients accordion
     this.ingredientsUl.innerHTML = ''
     for (const ingredientName of allIngredients) {
-      this.ingredientsUl.appendChild(this.createIngredientLi(ingredientName))
+      if (match(ingredientName, filtersSearch.ingredients)) {
+        this.ingredientsUl.appendChild(
+          this.createDropdownLi('ingredient', ingredientName)
+        )
+      }
     }
 
     // Render appliances accordion
     this.appliancesUl.innerHTML = ''
     for (const applianceName of allAppliances) {
-      this.appliancesUl.appendChild(this.createApplianceLi(applianceName))
+      if (match(applianceName, filtersSearch.appliances)) {
+        this.appliancesUl.appendChild(
+          this.createDropdownLi('appliance', applianceName)
+        )
+      }
     }
 
     // Render ustensils accordion
     this.ustensilsUl.innerHTML = ''
     for (const ustensilName of allUstensils) {
-      this.ustensilsUl.appendChild(this.createUstensilLi(ustensilName))
+      if (match(ustensilName, filtersSearch.ustensils)) {
+        this.ustensilsUl.appendChild(
+          this.createDropdownLi('ustensil', ustensilName)
+        )
+      }
     }
 
     // Render tags
@@ -80,111 +122,6 @@ export class RecipesView extends EventEmitter {
     }
     for (const ustensil of filters.ustensils) {
       this.tags.appendChild(this.createTag('ustensil', ustensil))
-    }
-
-    // Render accordions after input
-    // Ingredients accordion
-    this.ingredientSearch.addEventListener('keyup', () => {
-      const valueInputIngt = this.ingredientSearch.value
-
-      this.emit('keyupInAccordions', {
-        all: allIngredients,
-        value: valueInputIngt,
-        type: 'ingredient'
-      })
-    })
-    // Appliances accordion
-    this.applianceSearch.addEventListener('keyup', () => {
-      const valueInputApp = this.applianceSearch.value
-      this.emit('keyupInAccordions', {
-        all: allAppliances,
-        value: valueInputApp,
-        type: 'appliance'
-      })
-    })
-    // Ustensils accordion
-    this.ustensilSearch.addEventListener('keyup', () => {
-      const valueInputUst = this.ustensilSearch.value
-      this.emit('keyupInAccordions', {
-        all: allUstensils,
-        value: valueInputUst,
-        type: 'ustensil'
-      })
-    })
-
-    // Modifie placeholder
-    const accordion = document.getElementById('accordion')
-    accordion.addEventListener('click', () => {
-      const accordionIngt = document.getElementById('accordion-item-ingt')
-      if (accordionIngt.click) {
-        const inputIngt = document.getElementById('input-ingredient')
-        if (
-          !document
-            .getElementById('accordion-button-ingt')
-            .classList.contains('collapsed')
-        ) {
-          inputIngt.setAttribute('placeholder', 'Rechercher un ingrédient')
-          inputIngt.closest('.accordion-item').classList.add('half-width')
-        } else {
-          inputIngt.setAttribute('placeholder', 'Ingrédients')
-          inputIngt.closest('.accordion-item').classList.remove('half-width')
-        }
-      }
-      const accordionApp = document.getElementById('accordion-item-app')
-      if (accordionApp.click) {
-        const inputApp = document.getElementById('input-appliance')
-        if (
-          !document
-            .getElementById('accordion-button-app')
-            .classList.contains('collapsed')
-        ) {
-          inputApp.setAttribute('placeholder', 'Rechercher un appareil')
-          inputApp.closest('.accordion-item').classList.add('half-width')
-        } else {
-          inputApp.setAttribute('placeholder', 'Appareils')
-          inputApp.closest('.accordion-item').classList.remove('half-width')
-        }
-      }
-      const accordionUst = document.getElementById('accordion-item-ust')
-      if (accordionUst.click) {
-        const inputUst = document.getElementById('input-ustensil')
-        if (
-          !document
-            .getElementById('accordion-button-ust')
-            .classList.contains('collapsed')
-        ) {
-          inputUst.setAttribute('placeholder', 'Rechercher un ustensile')
-          inputUst.closest('.accordion-item').classList.add('half-width')
-        } else {
-          inputUst.setAttribute('placeholder', 'Ustensiles')
-          inputUst.closest('.accordion-item').classList.remove('half-width')
-        }
-      }
-    })
-  }
-
-  // Créer les li dans accordions après avoir sélectionné un tag
-  renderAccordion(type, values) {
-    let node
-    let createEl
-    switch (type) {
-      case 'ingredient':
-        node = this.ingredientsUl
-        createEl = this.createIngredientLi
-        break
-      case 'appliance':
-        node = this.appliancesUl
-        createEl = this.createApplianceLi
-        break
-      case 'ustensil':
-        node = this.ustensilsUl
-        createEl = this.createUstensilLi
-        break
-    }
-    node.innerHTML = ''
-
-    for (const value of values) {
-      node.appendChild(createEl(value))
     }
   }
 
@@ -235,35 +172,19 @@ export class RecipesView extends EventEmitter {
 
   // Fonctions pour créer les li : Ingredient, Appliance, Ustensil
 
-  createIngredientLi(ingredientName) {
+  createDropdownLi(type, name) {
     const liElem = document.createElement('li')
+    liElem.tabIndex = 0
     liElem.classList.add('tag-item')
-    liElem.textContent = capitalize(ingredientName)
-    liElem.addEventListener('click', () => {
-      this.emit('addFilter', {
-        type: 'ingredient',
-        name: ingredientName
-      })
+    liElem.textContent = capitalize(name)
+    liElem.addEventListener('click', (e) => {
+      e.preventDefault() // prevent focus
+      this.emit('addFilter', { type, name })
     })
-    return liElem
-  }
-
-  createApplianceLi(applianceName) {
-    const liElem = document.createElement('li')
-    liElem.classList.add('tag-item')
-    liElem.textContent = capitalize(applianceName)
-    liElem.addEventListener('click', () => {
-      this.emit('addFilter', { type: 'appliance', name: applianceName })
-    })
-    return liElem
-  }
-
-  createUstensilLi(ustensilName) {
-    const liElem = document.createElement('li')
-    liElem.classList.add('tag-item')
-    liElem.textContent = capitalize(ustensilName)
-    liElem.addEventListener('click', () => {
-      this.emit('addFilter', { type: 'ustensil', name: ustensilName })
+    liElem.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        this.emit('addFilter', { type, name })
+      }
     })
     return liElem
   }

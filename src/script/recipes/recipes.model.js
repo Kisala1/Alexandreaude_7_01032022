@@ -1,20 +1,22 @@
 import { EventEmitter } from '../util/event-emitter.js'
-import { tiny } from '../util/utils.js'
+import { match, tiny } from '../util/utils.js'
 
 export class RecipesModel extends EventEmitter {
   constructor() {
     super()
     this.allRecipes = []
     this.filteredRecipes = []
-    this.mainSearch = undefined
 
+    // this.search = ''
     this.filters = { ingredients: [], appliances: [], ustensils: [] }
+    this.filtersSearch = { ingredients: '', appliances: '', ustensils: '' }
   }
 
   setRecipes(recipes) {
     this.allRecipes = recipes
-    this.filter()
+    this.updateFilter()
   }
+
   addFilter(type, name) {
     let subFilters
     if (type === 'ingredient') {
@@ -29,7 +31,7 @@ export class RecipesModel extends EventEmitter {
 
     if (subFilters.indexOf(name) === -1) {
       subFilters.push(name)
-      this.filter()
+      this.updateFilter()
     }
   }
 
@@ -48,24 +50,30 @@ export class RecipesModel extends EventEmitter {
     const removedIndex = subFilters.indexOf(name)
     if (removedIndex !== -1) {
       subFilters.splice(removedIndex, 1)
-      this.filter()
+      this.updateFilter()
     }
   }
 
-  filterTagByInput(all, value, type) {
-    const results = all.filter((el) => el.includes(value))
-    this.emit('changeFilter', { type, values: results })
+  // searchContent(value) {
+  //   this.search = tiny(value.trim())
+  //   this.updateFilter()
+  // }
+
+  searchFilter(value, type) {
+    this.filtersSearch[type] = tiny(value.trim())
+    this.emitChange()
   }
 
-  filter() {
+  updateFilter() {
     this.filteredRecipes = this.allRecipes.filter((recipe) => {
       // Filter main search
-      if (this.mainSearch) {
-        if (false) {
-          // TODO
-          return false
-        }
-      }
+      // if (
+      //   this.search !== '' &&
+      //   !match(tiny(recipe.name), this.search) &&
+      //   !match(tiny(recipe.description), this.search)
+      // ) {
+      //   return false
+      // }
 
       // Filter ingredients
       for (const ingredientFilter of this.filters.ingredients) {
@@ -100,9 +108,14 @@ export class RecipesModel extends EventEmitter {
       return true
     })
 
+    this.emitChange()
+  }
+
+  emitChange() {
     this.emit('change', {
       recipes: this.filteredRecipes,
-      filters: this.filters
+      filters: this.filters,
+      filtersSearch: this.filtersSearch
     })
   }
 }

@@ -20,3 +20,10 @@ export function tiny(str) {
 export function compareIgnoreCase(a, b) {
   return a.localeCompare(b, 'fr', { ignorePunctuation: true })
 }
+
+export function match(value, search) {
+  if (search === '') {
+    return true
+  }
+  return value.includes(search)
+}
