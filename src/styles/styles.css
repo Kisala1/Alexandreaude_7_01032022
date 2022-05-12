@@ -11648,6 +11648,86 @@ nav button:focus {
 
 /************/
 /*****************DROPDOWNS**********************/
+.filters {
+  display: flex;
+  gap: 1em;
+  margin-bottom: 0.5rem;
+}
+
+.filter {
+  position: relative;
+}
+.filter .filter-btn,
+.filter ul {
+  background: #0d6efd;
+  color: #fff;
+}
+.filter .filter-btn {
+  display: flex;
+  padding: 5px;
+  border-radius: 5px;
+}
+.filter input[type=text] {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  outline: none;
+}
+.filter input[type=text]::placeholder {
+  color: inherit;
+}
+.filter .filter-dropdown {
+  position: absolute;
+  left: 0px;
+  z-index: 9999;
+  transition: all ease-in-out 0.2s;
+  max-height: 0;
+  overflow: hidden;
+}
+.filter ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 40vh;
+  overflow-y: auto;
+  display: grid;
+}
+.filter ul li:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+.filter ul::-webkit-scrollbar {
+  width: 12px;
+}
+.filter ul::-webkit-scrollbar-track {
+  background: transparent;
+}
+.filter ul::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+}
+.filter ul::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.filter:focus-within .bi-chevron-down::before {
+  transform: rotate(-180deg);
+}
+.filter:focus-within .filter-dropdown {
+  max-height: 40vh;
+}
+
+.filter.appliances .filter-btn,
+.filter.appliances ul {
+  background: #20c997;
+}
+
+.filter.ustensils .filter-btn,
+.filter.ustensils ul {
+  background: #fd7e14;
+}
+
 .accordion {
   display: flex;
   margin-bottom: 0.5rem !important;
@@ -11658,24 +11738,35 @@ nav button:focus {
   margin-right: 1em;
 }
 
-.half-width {
-  min-width: 50%;
-}
-
 .accordion-button {
   box-shadow: none !important;
+  justify-content: end;
+}
+.accordion-button .bi-chevron-down {
+  position: absolute;
+}
+.accordion-button .bi-chevron-down::before {
+  font-size: large;
+  transition: transform 0.2s ease-in-out;
 }
 .accordion-button::after {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  background-image: none;
 }
 
 .accordion-button.collapsed {
   border-radius: 0.3em;
 }
 
+.accordion-button:not(.collapsed) {
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
+}
+.accordion-button:not(.collapsed) .bi-chevron-down::before {
+  transform: rotate(-180deg);
+}
+
 .accordion-button:not(.collapsed)::after {
-  border-radius: 0em;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  background-image: none;
 }
 
 .input-accordion {
@@ -11717,8 +11808,6 @@ nav button:focus {
   width: 100%;
   color: #fff;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   margin: 0.2em 1em 0.2em 0.2em;
 }
 

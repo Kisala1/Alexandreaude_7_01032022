@@ -52,6 +52,53 @@
           </form>
         </nav>
         <div id="tagSelector" class="tagSelector"></div>
+        <div class="filters">
+          <div>
+            <label for="input-ingredients" class="filter ingredients">
+              <div class="filter-btn">
+                <input
+                  id="input-ingredients"
+                  type="text"
+                  placeholder="Ingrédients"
+                />
+                <i class="bi bi-chevron-down"></i>
+              </div>
+              <div class="filter-dropdown">
+                <ul id="tags-ingredients"></ul>
+              </div>
+            </label>
+          </div>
+          <div>
+            <label for="input-appliances" class="filter appliances">
+              <div class="filter-btn">
+                <input
+                  id="input-appliances"
+                  type="text"
+                  placeholder="Appareils"
+                />
+                <i class="bi bi-chevron-down"></i>
+              </div>
+              <div class="filter-dropdown">
+                <ul id="tags-appliances"></ul>
+              </div>
+            </label>
+          </div>
+          <div>
+            <label for="input-ustensils" class="filter ustensils">
+              <div class="filter-btn">
+                <input
+                  id="input-ustensils"
+                  type="text"
+                  placeholder="Ustensiles"
+                />
+                <i class="bi bi-chevron-down"></i>
+              </div>
+              <div class="filter-dropdown">
+                <ul id="tags-ustensils"></ul>
+              </div>
+            </label>
+          </div>
+        </div>
         <div id="accordion" class="accordion">
           <div id="accordion-item-ingt" class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
@@ -65,11 +112,12 @@
                 aria-controls="collapseOne"
               >
                 <input
-                  id="input-ingredient"
+                  id="input-ingredientXXX"
                   class="input-accordion bg-primary"
                   type="text"
                   placeholder="Ingrédients"
                 />
+                <i class="bi bi-chevron-down"></i>
               </button>
             </h2>
             <div
@@ -79,7 +127,7 @@
               data-bs-parent="#accordion"
             >
               <ul
-                id="tags-ingredients"
+                id="tags-ingredientsXXX"
                 class="accordion-body list-ingredient"
               ></ul>
             </div>
@@ -96,11 +144,12 @@
                 aria-controls="collapseTwo"
               >
                 <input
-                  id="input-appliance"
+                  id="input-applianceXXX"
                   class="input-accordion input-appliance"
                   type="text"
                   placeholder="Appareils"
                 />
+                <i class="bi bi-chevron-down"></i>
               </button>
             </h2>
             <div
@@ -110,7 +159,7 @@
               data-bs-parent="#accordion"
             >
               <ul
-                id="tags-appliances"
+                id="tags-appliancesXXX"
                 class="accordion-body list-appliance"
               ></ul>
             </div>
@@ -127,11 +176,12 @@
                 aria-controls="collapseThree"
               >
                 <input
-                  id="input-ustensil"
+                  id="input-ustensilXXX"
                   class="input-accordion input-ustensil"
                   type="text"
                   placeholder="Ustensiles"
                 />
+                <i class="bi bi-chevron-down"></i>
               </button>
             </h2>
             <div
@@ -140,7 +190,10 @@
               aria-labelledby="headingThree"
               data-bs-parent="#accordion"
             >
-              <ul id="tags-ustensils" class="accordion-body list-ustensil"></ul>
+              <ul
+                id="tags-ustensilsXXX"
+                class="accordion-body list-ustensil"
+              ></ul>
             </div>
           </div>
         </div>

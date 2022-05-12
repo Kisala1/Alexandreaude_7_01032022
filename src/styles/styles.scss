@@ -90,6 +90,113 @@ nav {
 }
 /************/
 /*****************DROPDOWNS**********************/
+.filters {
+  display: flex;
+  gap: 1em;
+  margin-bottom: ($spacer * 0.5);
+}
+
+.filter {
+  // width: 200px;
+  position: relative;
+
+  .filter-btn,
+  ul {
+    background: $blue;
+    color: $white;
+  }
+
+  .filter-btn {
+    display: flex;
+
+    padding: 5px;
+    border-radius: 5px;
+    // TODO
+  }
+
+  input[type='text'] {
+    flex: 1;
+    min-width: 0;
+
+    border: none;
+    background: transparent;
+    color: inherit;
+    outline: none;
+
+    &::placeholder {
+      color: inherit;
+    }
+  }
+
+  .filter-dropdown {
+    position: absolute;
+    left: 0px;
+    z-index: 9999;
+
+    transition: all ease-in-out 0.2s;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    max-height: 40vh;
+    overflow-y: auto;
+
+    display: grid;
+    // TODO
+
+    li {
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 12px;
+      &-track {
+        background: transparent;
+      }
+      &-thumb {
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 20px;
+      }
+      &-corner {
+        background: transparent;
+      }
+    }
+  }
+}
+
+.filter:focus-within {
+  .bi-chevron-down::before {
+    transform: rotate(-180deg);
+  }
+
+  .filter-dropdown {
+    max-height: 40vh;
+  }
+}
+
+.filter.appliances {
+  .filter-btn,
+  ul {
+    background: $teal;
+  }
+}
+
+.filter.ustensils {
+  .filter-btn,
+  ul {
+    background: $orange;
+  }
+}
+
+//////////////////////////////////////////////////
+
 .accordion {
   display: flex;
   margin-bottom: ($spacer * 0.5) !important;
@@ -98,22 +205,32 @@ nav {
   border: none !important;
   margin-right: 1em;
 }
-.half-width {
-  min-width: 50%;
-}
 .accordion-button {
   box-shadow: none !important;
-
+  justify-content: end;
+  .bi-chevron-down {
+    position: absolute;
+  }
+  .bi-chevron-down::before {
+    font-size: large;
+    transition: transform 0.2s ease-in-out;
+  }
   &::after {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-image: none;
   }
 }
 .accordion-button.collapsed {
   border-radius: 0.3em;
 }
+.accordion-button:not(.collapsed) {
+  border-top-left-radius: 0.3em;
+  border-top-right-radius: 0.3em;
+  .bi-chevron-down::before {
+    transform: rotate(-180deg);
+  }
+}
 .accordion-button:not(.collapsed)::after {
-  border-radius: 0em;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFFFFF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  background-image: none;
 }
 
 .input-accordion {
@@ -157,8 +274,6 @@ nav {
     width: 100%;
     color: $white;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     margin: 0.2em 1em 0.2em 0.2em;
   }
 }
