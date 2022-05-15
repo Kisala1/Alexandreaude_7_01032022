@@ -5,13 +5,15 @@ export class RecipesView extends EventEmitter {
   constructor() {
     super()
     this.recipesElem = document.getElementById('card-recipe')
+
     this.ingredientsUl = document.getElementById('tags-ingredients')
     this.appliancesUl = document.getElementById('tags-appliances')
     this.ustensilsUl = document.getElementById('tags-ustensils')
+
+    // this.mainSearch = document.getElementById('main-search')
     this.ingredientSearch = document.getElementById('input-ingredients')
     this.applianceSearch = document.getElementById('input-appliances')
     this.ustensilSearch = document.getElementById('input-ustensils')
-    // this.mainSearch = document.getElementById('main-search')
 
     this.tags = document.getElementById('tagSelector')
 
@@ -82,7 +84,8 @@ export class RecipesView extends EventEmitter {
     for (const recipe of recipes) {
       this.recipesElem.appendChild(this.createRecipe(recipe))
     }
-    // Render ingredients accordion
+
+    // Render ingredients dropdown
     this.ingredientsUl.innerHTML = ''
     for (const ingredientName of allIngredients) {
       if (match(ingredientName, filtersSearch.ingredients)) {
@@ -92,7 +95,7 @@ export class RecipesView extends EventEmitter {
       }
     }
 
-    // Render appliances accordion
+    // Render appliances dropdown
     this.appliancesUl.innerHTML = ''
     for (const applianceName of allAppliances) {
       if (match(applianceName, filtersSearch.appliances)) {
@@ -102,7 +105,7 @@ export class RecipesView extends EventEmitter {
       }
     }
 
-    // Render ustensils accordion
+    // Render ustensils dropdown
     this.ustensilsUl.innerHTML = ''
     for (const ustensilName of allUstensils) {
       if (match(ustensilName, filtersSearch.ustensils)) {

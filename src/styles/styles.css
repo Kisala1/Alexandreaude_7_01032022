@@ -11667,6 +11667,9 @@ nav button:focus {
   padding: 0.8em;
   border-radius: 0.3em;
 }
+.filter .filter-btn .bi-chevron-down {
+  cursor: pointer;
+}
 .filter input[type=text] {
   flex: 1;
   min-width: 0;
@@ -11717,6 +11720,10 @@ nav button:focus {
 }
 .filter ul::-webkit-scrollbar-corner {
   background: transparent;
+}
+
+.hidden {
+  max-height: 0;
 }
 
 .filter:focus-within .filter-btn {
