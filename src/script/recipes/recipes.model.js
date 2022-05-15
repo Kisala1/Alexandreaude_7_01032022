@@ -7,7 +7,7 @@ export class RecipesModel extends EventEmitter {
     this.allRecipes = []
     this.filteredRecipes = []
 
-    // this.search = ''
+    this.search = ''
     this.filters = { ingredients: [], appliances: [], ustensils: [] }
     this.filtersSearch = { ingredients: '', appliances: '', ustensils: '' }
   }
@@ -54,10 +54,10 @@ export class RecipesModel extends EventEmitter {
     }
   }
 
-  // searchContent(value) {
-  //   this.search = tiny(value.trim())
-  //   this.updateFilter()
-  // }
+  searchContent(value) {
+    this.search = tiny(value.trim())
+    this.updateFilter()
+  }
 
   searchFilter(value, type) {
     this.filtersSearch[type] = tiny(value.trim())
@@ -67,13 +67,13 @@ export class RecipesModel extends EventEmitter {
   updateFilter() {
     this.filteredRecipes = this.allRecipes.filter((recipe) => {
       // Filter main search
-      // if (
-      //   this.search !== '' &&
-      //   !match(tiny(recipe.name), this.search) &&
-      //   !match(tiny(recipe.description), this.search)
-      // ) {
-      //   return false
-      // }
+      if (
+        this.search !== '' &&
+        !match(tiny(recipe.name), this.search) &&
+        !match(tiny(recipe.description), this.search)
+      ) {
+        return false
+      }
 
       // Filter ingredients
       for (const ingredientFilter of this.filters.ingredients) {

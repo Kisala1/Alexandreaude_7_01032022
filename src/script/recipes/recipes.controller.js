@@ -12,7 +12,7 @@ export class RecipesController {
 
     model.on('change', (data) => view.render(data))
 
-    // view.on('searchContent', ({ value }) => model.searchContent(value))
+    view.on('searchContent', ({ value }) => model.searchContent(value))
     view.on('addFilter', ({ type, name }) => model.addFilter(type, name))
     view.on('removeFilter', ({ type, name }) => model.removeFilter(type, name))
     view.on('searchFilter', ({ value, type }) =>

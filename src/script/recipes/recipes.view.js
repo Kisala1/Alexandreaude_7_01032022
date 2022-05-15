@@ -10,7 +10,7 @@ export class RecipesView extends EventEmitter {
     this.appliancesUl = document.getElementById('tags-appliances')
     this.ustensilsUl = document.getElementById('tags-ustensils')
 
-    // this.mainSearch = document.getElementById('main-search')
+    this.mainSearch = document.getElementById('main-search')
     this.ingredientSearch = document.getElementById('input-ingredients')
     this.applianceSearch = document.getElementById('input-appliances')
     this.ustensilSearch = document.getElementById('input-ustensils')
@@ -21,10 +21,10 @@ export class RecipesView extends EventEmitter {
   }
 
   registerListener() {
-    // this.mainSearch.addEventListener('keyup', () => {
-    //   const mainSearchValue = tiny(this.mainSearch.value)
-    //   this.emit('searchContent', { value: mainSearchValue })
-    // })
+    this.mainSearch.addEventListener('keyup', () => {
+      const mainSearchValue = tiny(this.mainSearch.value)
+      this.emit('searchContent', { value: mainSearchValue })
+    })
 
     // Ingredients dropdown
     this.ingredientSearch.addEventListener('input', () => {
