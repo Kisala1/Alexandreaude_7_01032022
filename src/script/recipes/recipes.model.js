@@ -65,14 +65,17 @@ export class RecipesModel extends EventEmitter {
   }
 
   updateFilter() {
-    this.filteredRecipes = this.allRecipes.filter((recipe) => {
+    this.filteredRecipes = []
+    for (const recipe of this.allRecipes) {
+      let isValid = true
+
       // Filter main search
       if (
         this.search !== '' &&
         !match(tiny(recipe.name), this.search) &&
         !match(tiny(recipe.description), this.search)
       ) {
-        return false
+        isValid = false
       }
 
       // Filter ingredients
@@ -82,14 +85,14 @@ export class RecipesModel extends EventEmitter {
             (el) => tiny(el.ingredient) === ingredientFilter
           ) === -1
         ) {
-          return false
+          isValid = false
         }
       }
 
       // Filter appliances
       for (const applianceFilter of this.filters.appliances) {
         if (tiny(recipe.appliance) !== applianceFilter) {
-          return false
+          isValid = false
         }
       }
 
@@ -101,14 +104,14 @@ export class RecipesModel extends EventEmitter {
             (ustensil) => tiny(ustensil) === ustensilFilter
           ) === -1
         ) {
-          return false
+          isValid = false
         }
       }
-
-      return true
-    })
-
-    this.emitChange()
+      if (isValid) {
+        this.filteredRecipes.push(recipe)
+      }
+      this.emitChange()
+    }
   }
 
   emitChange() {
