@@ -72,8 +72,11 @@ export class RecipesModel extends EventEmitter {
       // Filter main search
       if (
         this.search !== '' &&
+        this.search.length > 3 &&
         !match(tiny(recipe.name), this.search) &&
-        !match(tiny(recipe.description), this.search)
+        !match(tiny(recipe.description), this.search) &&
+        !match(tiny(recipe.appliance), this.search) &&
+        !match(recipe.ustensils.toString(), this.search)
       ) {
         isValid = false
       }
