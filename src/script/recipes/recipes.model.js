@@ -66,13 +66,13 @@ export class RecipesModel extends EventEmitter {
 
   updateFilter() {
     this.filteredRecipes = []
-    for (const recipe of this.allRecipes) {
-      let isValid = true
+    let isValid = true
 
+    for (const recipe of this.allRecipes) {
       // Filter main search
       if (
         this.search !== '' &&
-        this.search.length > 3 &&
+        this.search.length > 2 &&
         !match(tiny(recipe.name), this.search) &&
         !match(tiny(recipe.description), this.search) &&
         !match(tiny(recipe.appliance), this.search) &&
