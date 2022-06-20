@@ -21,7 +21,7 @@ export class RecipesView extends EventEmitter {
   }
 
   registerListener() {
-    this.mainSearch.addEventListener('keyup', () => {
+    this.mainSearch.addEventListener('input', () => {
       const mainSearchValue = tiny(this.mainSearch.value)
       this.emit('searchContent', { value: mainSearchValue })
     })

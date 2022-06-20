@@ -66,55 +66,84 @@ export class RecipesModel extends EventEmitter {
 
   updateFilter() {
     this.filteredRecipes = []
-    let isValid = true
-
     for (const recipe of this.allRecipes) {
-      // Filter main search
-      if (
-        this.search !== '' &&
-        this.search.length > 2 &&
-        !match(tiny(recipe.name), this.search) &&
-        !match(tiny(recipe.description), this.search) &&
-        !match(tiny(recipe.appliance), this.search) &&
-        !match(recipe.ustensils.toString(), this.search)
-      ) {
-        isValid = false
-      }
-
-      // Filter ingredients
-      for (const ingredientFilter of this.filters.ingredients) {
-        if (
-          recipe.ingredients.findIndex(
-            (el) => tiny(el.ingredient) === ingredientFilter
-          ) === -1
-        ) {
-          isValid = false
-        }
-      }
-
-      // Filter appliances
-      for (const applianceFilter of this.filters.appliances) {
-        if (tiny(recipe.appliance) !== applianceFilter) {
-          isValid = false
-        }
-      }
-
-      // Filter ustensils
-
-      for (const ustensilFilter of this.filters.ustensils) {
-        if (
-          recipe.ustensils.findIndex(
-            (ustensil) => tiny(ustensil) === ustensilFilter
-          ) === -1
-        ) {
-          isValid = false
-        }
-      }
-      if (isValid) {
+      if (this.matchSearch(recipe) && this.matchFilters(recipe)) {
         this.filteredRecipes.push(recipe)
       }
-      this.emitChange()
     }
+
+    this.emitChange()
+  }
+
+  matchSearch(recipe) {
+    if (this.search.length <= 2) {
+      // No need to search
+      return true
+    }
+
+    // Search name
+    if (match(tiny(recipe.name), this.search)) {
+      return true
+    }
+
+    // Search description
+    if (match(tiny(recipe.description), this.search)) {
+      return true
+    }
+
+    // Search ingredients
+    for (const ingredient of recipe.ingredients) {
+      if (match(ingredient.ingredient, this.search)) {
+        return true
+      }
+    }
+
+    // Search appliance
+    if (match(tiny(recipe.appliance), this.search)) {
+      return true
+    }
+
+    // Search ustensils
+    for (const ustensil of recipe.ustensils) {
+      if (match(ustensil, this.search)) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  matchFilters(recipe) {
+    // Filter ingredients
+    for (const ingredientFilter of this.filters.ingredients) {
+      if (
+        recipe.ingredients.findIndex(
+          (el) => tiny(el.ingredient) === ingredientFilter
+        ) === -1
+      ) {
+        return false
+      }
+    }
+
+    // Filter appliances
+    for (const applianceFilter of this.filters.appliances) {
+      if (tiny(recipe.appliance) !== applianceFilter) {
+        return false
+      }
+    }
+
+    // Filter ustensils
+    for (const ustensilFilter of this.filters.ustensils) {
+      if (
+        recipe.ustensils.findIndex(
+          (ustensil) => tiny(ustensil) === ustensilFilter
+        ) === -1
+      ) {
+        return false
+      }
+    }
+
+    return true
   }
 
   emitChange() {
