@@ -65,12 +65,9 @@ export class RecipesModel extends EventEmitter {
   }
 
   updateFilter() {
-    this.filteredRecipes = []
-    for (const recipe of this.allRecipes) {
-      if (this.matchSearch(recipe) && this.matchFilters(recipe)) {
-        this.filteredRecipes.push(recipe)
-      }
-    }
+    this.filteredRecipes = this.allRecipes.filter((recipe) => {
+      return this.matchSearch(recipe) && this.matchFilters(recipe)
+    })
 
     this.emitChange()
   }
@@ -92,10 +89,12 @@ export class RecipesModel extends EventEmitter {
     }
 
     // Search ingredients
-    for (const ingredient of recipe.ingredients) {
-      if (match(ingredient.ingredient, this.search)) {
-        return true
-      }
+    if (
+      recipe.ingredients.some((ingredient) =>
+        match(ingredient.ingredient, this.search)
+      )
+    ) {
+      return true
     }
 
     // Search appliance
@@ -104,10 +103,8 @@ export class RecipesModel extends EventEmitter {
     }
 
     // Search ustensils
-    for (const ustensil of recipe.ustensils) {
-      if (match(ustensil, this.search)) {
-        return true
-      }
+    if (recipe.ustensils.some((ustensil) => match(ustensil, this.search))) {
+      return true
     }
 
     return false
