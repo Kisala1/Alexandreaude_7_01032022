@@ -91,7 +91,7 @@ export class RecipesModel extends EventEmitter {
     // Search ingredients
     if (
       recipe.ingredients.some((ingredient) =>
-        match(ingredient.ingredient, this.search)
+        match(tiny(ingredient.ingredient), this.search)
       )
     ) {
       return true
@@ -103,7 +103,7 @@ export class RecipesModel extends EventEmitter {
     }
 
     // Search ustensils
-    if (recipe.ustensils.some((ustensil) => match(ustensil, this.search))) {
+    if (recipe.ustensils.some((ustensil) => matchtiny((ustensil), this.search))) {
       return true
     }
 
