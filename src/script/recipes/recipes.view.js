@@ -176,7 +176,7 @@ export class RecipesView extends EventEmitter {
   // Fonctions pour créer les li : Ingredient, Appliance, Ustensil
 
   createDropdownLi(type, name) {
-    const liElem = document.createElement('li')
+    const liElem = document.createElement('small')
     liElem.tabIndex = 0
     liElem.classList.add('tag-item')
     liElem.textContent = capitalize(name)

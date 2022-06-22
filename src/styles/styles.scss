@@ -100,7 +100,7 @@ nav {
   position: relative;
 
   .filter-btn,
-  ul {
+  strong {
     background: $blue;
     color: $white;
   }
@@ -126,6 +126,7 @@ nav {
 
     &::placeholder {
       color: inherit;
+      opacity: 100%; // Adaptation Firefox
     }
   }
 
@@ -139,7 +140,7 @@ nav {
     overflow: hidden;
   }
 
-  ul {
+  strong {
     list-style: none;
     margin: 0;
     padding: 0.5em 0.3em;
@@ -153,7 +154,7 @@ nav {
     grid-template-columns: repeat(3, 1fr);
     gap: 0.5em;
 
-    li {
+    small {
       padding: 0.2em;
       white-space: nowrap;
       &:hover {
@@ -174,6 +175,10 @@ nav {
         background: transparent;
       }
     }
+
+    // Pour Firefox
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
   }
 }
 
@@ -197,14 +202,14 @@ nav {
 
 .filter.appliances {
   .filter-btn,
-  ul {
+  strong {
     background: $teal;
   }
 }
 
 .filter.ustensils {
   .filter-btn,
-  ul {
+  strong {
     background: $orange;
   }
 }
